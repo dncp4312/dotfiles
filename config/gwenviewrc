@@ -1,0 +1,53 @@
+DP-2 Window-Maximized 1080x1920=true
+DP-2 XPosition=0
+DP-2 YPosition=29
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAPPAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
+
+[$Version]
+update_info=gwenview.upd:SideBar_StatusBar_Rename,gwenview.upd:ImageView_AlphaBackgroundMode_Update,gwenview.upd:DeleteThumbnailSetting_Rename
+
+[General]
+JPEGQuality=100
+LastTargetDir[$e]=file:$HOME/Pictures
+ViewBackgroundValue=60
+
+[ImageView]
+ThumbnailSplitterSizes=824,178
+
+[KFileDialog Settings]
+Recent Files[$e]=file:$HOME/Pictures/17011-AP1_17_2019_000050B.jpg,file:$HOME/Pictures/17011-AP1_17_2019_000050B.jpg
+Recent URLs[$e]=file:$HOME/Pictures/
+iconViewIconSize=43
+
+[MainWindow]
+DP-2 Height 1080=658
+DP-2 Width 1920=1272
+DP-2 Window-Maximized 1920x1080=true
+DP-2 XPosition=0
+DP-2 YPosition=26
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAQcAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
+ToolBarsMovable=Disabled
+
+[Notification Messages]
+HideMenuBarWarning=false
+
+[Recent Files]
+File1[$e]=$HOME/.local/share/wallpapers/Windlow.jpg
+File2[$e]=$HOME/.dotfiles/local/share/wallpapers/Windlow.jpg
+Name1[$e]=Windlow.jpg
+Name2[$e]=Windlow.jpg
+
+[SideBar]
+IsVisible BrowseMode=false
+SideBarSplitterSizes=242,1669
+
+[StatusBar]
+IsVisible BrowseMode=false
+IsVisible ViewMode=false
+
+[ThumbnailView]
+ThumbnailSize=156
+
+[slide show]
+interval=2

@@ -1,0 +1,71 @@
+[ActionsWidget]
+ColumnState=AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAACAQAAAQAAAAAAAAAAAAAAAGT/////AAAAgQAAAAAAAAACAAAA+gAAAAEAAAAAAAAA1gAAAAEAAAAAAAAD6AAAAABk
+
+[ConfigDialog]
+DP-2 Height 1080=510
+DP-2 Width 1920=595
+
+[DownloadDialog Settings]
+DP-2 Height 1080=400
+DP-2 Width 1920=700
+DP-2 Window-Maximized 1920x1080=true
+
+[FileDialogSize]
+DP-2 Height 1080=1005
+DP-2 Width 1920=1912
+
+[General]
+Number of Actions=0
+
+[KFileDialog Settings]
+Recent Files[$e]=1819571.jpg,file:$HOME/Desktop/wallhaven-392lk9.jpg,file:$HOME/Downloads/arch_linux_icon_white_132588.svg,file:$HOME/.local/share/plasma/desktoptheme/breeze-alphablack/icons/start.svgz,file:$HOME/Downloads/hiroshima-japan-flag-symbol.svg,file:$HOME/Downloads/fire_icon_138608.ico,file:$HOME/Downloads/applet-window-buttons-0.8.1.tar.gz,file:$HOME/.icons/Downloaded/icons8-windows-10-48.png
+Recent URLs[$e]=file:$HOME/Downloads/,file:$HOME/Pictures/,file:$HOME/.icons/Downloaded/,file:$HOME/.icons/,file:$HOME/,file:$HOME/Documents/,file:$HOME/.local/share/plasma/desktoptheme/breeze-alphablack/icons/,file:$HOME/Desktop/
+detailViewIconSize=100
+iconViewIconSize=128
+
+[KPropertiesDialog]
+DP-2 Height 1080=352
+DP-2 Width 1920=394
+
+[Open-with settings]
+CompletionMode=1
+History=pcman,atom
+
+[PlasmaRunnerManager]
+LaunchCounts=1 services_applications:dde-control-center.desktop,1 services_applications:kcmtrash.desktop,1 services_applications:emacs.desktop,1 services_applications:kcm_plasmasearch.desktop,1 services_applications:org.kde.spectacle.desktop,1 services_applications:org.kde.elisa.desktop,1 services_applications:winetricks.desktop,1 baloosearch_/home/xevil/Downloads/edex-ui-git/edex-ui.install,1 shell_zile,5 services_applications:whatsapp-nativefier-dark.desktop,18 services_applications:systemsettings.desktop,2 services_applications:autostart.desktop,12 services_applications:org.kde.konsole.desktop,4 services_applications:signal-desktop.desktop,6 services_applications:kvantummanager.desktop,1 recentdocuments_file:///usr/share/plymouth/themes,1 services_applications:pcmanfm.desktop,4 services_applications:multibootusb.desktop,3 shell_wine,7 services_applications:org.kde.krusader.desktop,1 shell_ventoy,4 services_applications:org.flameshot.Flameshot.desktop,1 services_applications:org.kde.kinfocenter.desktop,1 services_applications:gimp.desktop,2 shell_cava,2 services_applications:torbrowser.desktop,1 shell_7z,7 services_applications:pywinery.desktop,1 services_applications:org.ksnip.ksnip.desktop,3 services_applications:Alacritty.desktop,2 services_applications:org.manjaro.pamac.manager.desktop,4 services_applications:timeshift-gtk.desktop,9 services_applications:gparted.desktop,1 services_applications:spotify.desktop,3 services_applications:whatsapp-nativefier.desktop,1 services_applications:wine-Programs-multibootusb-multibootusb.desktop,1 services_applications:green-recorder.desktop,1 services_applications:joystick.desktop,2 services_applications:org.kde.kwrite.desktop,1 services_applications:kcm_kwin_virtualdesktops.desktop,1 services_applications:systemadm.desktop,2 services_applications:org.gnome.Terminal.desktop,2 baloosearch,1 services_applications:nitrogen.desktop,1 services_applications:firewall-config.desktop,3 services_applications:x11vnc.desktop,3 services_applications:brave-browser.desktop,2 services_applications:org.kde.gwenview.desktop,5 services_applications:balena-etcher-electron.desktop,8 services_applications:virtualbox.desktop,4 services_applications:edex-ui.desktop,5 services_applications:scribus.desktop,2 services_applications:webtorrent-desktop.desktop,1 services_applications:org.gnome.Nautilus.desktop,2 services_applications:anydesk.desktop,1 services_applications:q4wine.desktop,1 services_applications:org.kde.dolphin.desktop,1 services_applications:kcm_keys.desktop,2 services_applications:dde-file-manager.desktop,1 services_applications:arch-plymouthize.desktop,2 services_applications:com.uploadedlobster.peek.desktop,4 services_applications:com.teamviewer.TeamViewer.desktop,2 services_applications:vlc.desktop,1 recentdocuments_file:///usr/share/plymouth,7 services_applications:kazam.desktop,15 services_applications:org.kde.discover.desktop
+
+[PlasmaViews][Panel 2][Defaults]
+thickness=28
+
+[PlasmaViews][Panel 2][Horizontal1920]
+thickness=28
+
+[PlasmaViews][Panel 26][Defaults]
+thickness=27
+
+[PlasmaViews][Panel 26][Horizontal1920]
+thickness=27
+
+[PlasmaViews][Panel 33][Defaults]
+thickness=36
+
+[PlasmaViews][Panel 33][Vertical1080]
+thickness=36
+
+[PlasmaViews][Panel 34][Defaults]
+thickness=28
+
+[PlasmaViews][Panel 34][Horizontal1280]
+thickness=42
+
+[PlasmaViews][Panel 34][Horizontal1920]
+thickness=28
+
+[PlasmaViews][Panel 34][Vertical1080]
+thickness=46
+
+[ScreenConnectors]
+0=DP-2
+
+[Updates]
+performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/unlock_widgets.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/maintain_existing_desktop_icon_sizes.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/move_desktop_layout_config.js
