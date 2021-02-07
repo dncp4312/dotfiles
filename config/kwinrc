@@ -49,4 +49,4 @@ ButtonsOnLeft=
 ButtonsOnRight=LIAX
 ShowToolTips=false
 library=org.kde.kwin.aurorae
-theme=__aurorae__svg__WhiteSur-dark
+theme=__aurorae__svg__WhiteSur-Sharp-dark
