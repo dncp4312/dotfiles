@@ -220,7 +220,7 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_5Triggers0]
-Key=
+Key=Meta+E
 Type=SHORTCUT
 Uuid={8e081785-dc77-41d7-8c48-3c841c342c9d}
 

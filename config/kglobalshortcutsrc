@@ -29,7 +29,7 @@ _k_friendly_name=Custom Shortcuts Service
 {1867529c-57a0-4d86-b981-e6ac6de16bc4}=Meta+V,none,Vlc
 {6887001a-0646-4b25-b23f-c07cfb004710}=Meta+T,none,Alacritty
 {8340ea77-08d5-40e4-975e-5f7714e112b8}=`,none,TDrop
-{8e081785-dc77-41d7-8c48-3c841c342c9d}=none,none,Dolphin
+{8e081785-dc77-41d7-8c48-3c841c342c9d}=Meta+E,none,Dolphin
 {af584040-6cbb-4efe-a758-c3608bcfbc9c}=none,none,Launch Konsole
 {bffd8317-6fd7-49e8-ad29-059b1139362f}=Meta+F,none,Firefox
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=,none,Search
@@ -218,7 +218,7 @@ stopmedia=Media Stop,Media Stop,Stop media playback
 
 [org.kde.dolphin.desktop]
 _k_friendly_name=Dolphin
-_launch=Meta+E,Meta+E,Dolphin
+_launch=,Meta+E,Dolphin
 
 [org.kde.plasma.emojier.desktop]
 _k_friendly_name=Emoji Selector
@@ -250,6 +250,7 @@ activate task manager entry 7=Meta+7,Meta+7,Activate Task Manager Entry 7
 activate task manager entry 8=Meta+8,Meta+8,Activate Task Manager Entry 8
 activate task manager entry 9=Meta+9,Meta+9,Activate Task Manager Entry 9
 activate widget 3=Alt+F1,none,Activate Application Launcher Widget
+activate widget 35=Esc,none,Activate Application Launcher Widget
 clear-history=none,none,Clear Clipboard History
 clipboard_action=Ctrl+Alt+X,Ctrl+Alt+X,Enable Clipboard Actions
 cycleNextAction=none,none,Next History Item

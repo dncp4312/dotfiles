@@ -35,7 +35,7 @@ alias mkrc='mkrc -v'
 alias lsrc='lsrc -v'
 
 alias cmatrix='cmatrix ; c'
-alias theme='/home/xevil/custpath/theme.sh'
+alias theme='/home/xevil/.ricing/terminaltheme.sh'
 
 #functions
 

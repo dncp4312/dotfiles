@@ -9,7 +9,7 @@ State=AAAA/wAAAAD9AAAAAwAAAAAAAADiAAADzPwCAAAAAvsAAAAWAGYAbwBsAGQAZQByAHMARABvAG
 FontWeight=50
 
 [Desktop Entry]
-DefaultProfile=xev.profile
+DefaultProfile=
 
 [DetailsMode]
 FontWeight=50
@@ -57,7 +57,7 @@ DP-2 XPosition=0
 DP-2 YPosition=0
 MenuBar=Disabled
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAwAAAAAAAACcAAAD7/wCAAAAAvsAAAAWAGYAbwBsAGQAZQByAHMARABvAGMAawAAAAAA/////wAAAAIA////+wAAABQAcABsAGEAYwBlAHMARABvAGMAawEAAAAtAAAD7wAAAFQA////AAAAAQAAAAAAAAAA/AIAAAAB+wAAABAAaQBuAGYAbwBEAG8AYwBrAAAAAAD/////AAAAAgD///8AAAADAAAHgAAAALb8AQAAAAH7AAAAGAB0AGUAcgBtAGkAbgBhAGwARABvAGMAawAAAAAAAAAHgAAAAAIA////AAAG3QAAA+8AAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAQAAABYAbQBhAGkAbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAwAAAAAAAACcAAACbvwCAAAAAvsAAAAWAGYAbwBsAGQAZQByAHMARABvAGMAawAAAAAA/////wAAAAIA////+wAAABQAcABsAGEAYwBlAHMARABvAGMAawEAAAAtAAACbgAAAFQA////AAAAAQAAAAAAAAAA/AIAAAAB+wAAABAAaQBuAGYAbwBEAG8AYwBrAAAAAAD/////AAAAAgD///8AAAADAAAHgAAAAXr8AQAAAAH7AAAAGAB0AGUAcgBtAGkAbgBhAGwARABvAGMAawEAAAAAAAAHgAAAAI8A////AAAG3QAAAm4AAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAQAAABYAbQBhAGkAbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 
 [Notification Messages]
@@ -74,8 +74,8 @@ IconSize=16
 Plugins=appimagethumbnail,audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mltpreview,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail
 
 [SettingsDialog]
-DP-2 Height 1080=439
-DP-2 Width 1920=570
+DP-2 Height 1080=396
+DP-2 Width 1920=589
 
 [ViewPropertiesDialog]
 DP-2 Height 1080=556
