@@ -51,10 +51,10 @@ DialogHeight=1052
 DialogWidth=1920
 
 [Containments][112][Configuration]
-PreloadWeight=42
+PreloadWeight=26
 
 [Containments][112][Wallpaper][org.kde.image][General]
-Image=/home/xevil/.ricing/local/share/wallpapers/Alita.jpg
+Image=file:///home/xevil/.ricing/local/share/wallpapers/Alita.jpg
 SlidePaths=/home/xevil/.local/share/wallpapers,/usr/share/wallpapers
 
 [Containments][34]
@@ -106,7 +106,7 @@ immutability=1
 plugin=org.kde.plasma.kickoff
 
 [Containments][34][Applets][35][Configuration]
-PreloadWeight=97
+PreloadWeight=92
 
 [Containments][34][Applets][35][Configuration][ConfigDialog]
 DialogHeight=1052
@@ -127,7 +127,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][34][Applets][51][Configuration]
-PreloadWeight=97
+PreloadWeight=92
 SystrayContainmentId=52
 
 [Containments][34][Applets][70]
@@ -281,4 +281,4 @@ launchers=
 
 [ScreenMapping]
 itemsOnDisabledScreens=0,29,file:///home/xevil/GTA San Andreas User Files,file:///home/xevil/Music,file:///home/xevil/testdisk.log,file:///home/xevil/GTA Vice City User Files,file:///home/xevil/Videos,file:///home/xevil/VirtualBox VMs,file:///home/xevil/Desktop,file:///home/xevil/Public,file:///home/xevil/Templates,file:///home/xevil/Documents,file:///home/xevil/Desktop/TombRaider,file:///home/xevil/Downloads,file:///home/xevil/Pictures,file:///home/xevil/Drives/Games,file:///home/xevil/Drives/Images,file:///home/xevil/Drives/Personal,file:///home/xevil/Drives,file:///home/xevil/Drives/Softwares,file:///home/xevil/Drives/Volume,file:///home/xevil/Drives/Movies,file:///home/xevil/Drives/PhoneBackup,file:///home/xevil/Drives/Android,file:///home/xevil/Drives/NewVolume,file:///home/xevil/Drives/Wallpapers,file:///home/xevil/Drives/Extraas,file:///home/xevil/Drives/Windows,file:///home/xevil/Drives/Songs,file:///home/xevil/Drives/Videos,file:///home/xevil/Drives/GamesSetups
-screenMapping=desktop:/whatsapp-nativefier.desktop,0,desktop:/vlc.desktop,0,desktop:/Res2,0,desktop:/leftup.py,0,desktop:/dncp4312.pdf,0,desktop:/Windows 10.desktop,0,desktop:/linesUpdate & attachToBorder,0,desktop:/org.inkscape.Inkscape.desktop,0,desktop:/darktable.desktop,0,desktop:/systemsettings.desktop,0,desktop:/firefox.desktop,0,desktop:/W10.desktop,0,desktop:/org.kde.kdenlive.desktop,0,desktop:/org.kde.dolphin.desktop,0,desktop:/.Image 0195.jpg.migitallock,0,desktop:/right.dll,0,desktop:/dncp4312.cdr,0,desktop:/scribus.desktop,0,desktop:/signal-desktop.desktop,0,desktop:/gimp.desktop,0,desktop:/org.kde.gwenview.desktop,0,desktop:/.Image 0194.jpg.migitallock,0,desktop:/torbrowser.desktop,0,desktop:/leftup.dll,0,desktop:/Res,0,desktop:/timeshift-gtk.desktop,0,desktop:/org.kde.discover.desktop,0,desktop:/rightup.py,0
+screenMapping=desktop:/linesUpdate & attachToBorder,0,desktop:/Windows 10.desktop,0,desktop:/right.dll,0,desktop:/vlc.desktop,0,desktop:/org.kde.discover.desktop,0,desktop:/torbrowser.desktop,0,desktop:/dncp4312.pdf,0,desktop:/dncp4312.cdr,0,desktop:/firefox.desktop,0,desktop:/darktable.desktop,0,desktop:/org.kde.dolphin.desktop,0,desktop:/leftup.py,0,desktop:/rightup.py,0,desktop:/gimp.desktop,0,desktop:/org.kde.kdenlive.desktop,0,desktop:/org.kde.gwenview.desktop,0,desktop:/timeshift-gtk.desktop,0,desktop:/signal-desktop.desktop,0,desktop:/whatsapp-nativefier.desktop,0,desktop:/W10.desktop,0,desktop:/Res2,0,desktop:/systemsettings.desktop,0,desktop:/leftup.dll,0,desktop:/.Image 0194.jpg.migitallock,0,desktop:/.Image 0195.jpg.migitallock,0,desktop:/scribus.desktop,0,desktop:/Res,0,desktop:/org.inkscape.Inkscape.desktop,0

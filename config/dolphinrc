@@ -72,6 +72,9 @@ IconSize=16
 [PreviewSettings]
 Plugins=appimagethumbnail,audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mltpreview,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail
 
+[Search]
+Location=Everywhere
+
 [SettingsDialog]
 DP-2 Height 1080=396
 DP-2 Width 1920=589
