@@ -18,9 +18,6 @@ alias gcnfup='grub-mkconfig -o /boot/grub/grub.cfg'
 alias sysrun='systemctl start'
 alias sysstp='systemctl stop'
 
-alias zrcl='sudo nano /etc/zsh/zshrc.local'
-alias pcnf='sudo nano /etc/plymouth/plymouthd.conf'
-
 alias running='systemctl --type=service --state=running'
 alias enabled='systemctl list-unit-files | grep enabled'
 alias shutnw='shutdown now'
@@ -37,15 +34,4 @@ alias lsrc='lsrc -v'
 alias cmatrix='cmatrix ; c'
 alias theme='/home/xevil/.ricing/terminaltheme.sh'
 
-#functions
-
-show_colour() {
-    perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m \e[49m "};print "\n"' "$@"
-}
-
-run() { arg1=$1 ; nohup $1 > /dev/null & disown }
-
-#Mods
-#theme tomorrow-night-blue
-#theme frontend-fun-forrest
-theme wombat
+alias gr='git reset HEAD --hard'
