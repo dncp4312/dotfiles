@@ -29,8 +29,7 @@ run() { arg1=$1 ; nohup $1 > /dev/null & disown }
 #####                                                                         sources                                                                         #####
 ###################################################################################################################################################################
 
-  source /home/xevil/.zsh/.p10k/powerlevel10k.zsh-theme
-  [[ ! -f /home/xevil/.zsh/.p10k.zsh ]]    || source /home/xevil/.zsh/.p10k.zsh        # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f /home/xevil/.zsh/.grml.zsh ]]    || source /home/xevil/.zsh/.grml.zsh
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f /home/xevil/.zsh/.grml.zsh ]]    || source /home/xevil/.zsh/.grml.zsh
+  [[ ! -f /home/xevil/.zsh/.p10k.zsh ]]    || source /home/xevil/.zsh/.p10k.zsh     ;   source /home/xevil/.zsh/.p10k/powerlevel10k.zsh-theme
   [[ ! -f /home/xevil/.zsh/.aliases.zsh ]] || source /home/xevil/.zsh/.aliases.zsh
- 
