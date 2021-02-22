@@ -35,3 +35,5 @@ alias cmatrix='cmatrix ; c'
 alias theme='/home/xevil/.ricing/terminaltheme.sh'
 
 alias gr='git reset HEAD --hard'
+
+alias ls='ls -la --color'
