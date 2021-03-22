@@ -3,5 +3,5 @@ export waloc="$(grep "file" /home/xevil/.config/nitrogen/bg-saved.cfg | cut -d "
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
 
-[[ $XDG_VTNR -le 2 ]] && tbsm
+[[ $XDG_VTNR -le 2 && -z $SSH_TTY ]] && tbsm
 [[ -f ~/.zshrc ]] && . ~/.zshrc
