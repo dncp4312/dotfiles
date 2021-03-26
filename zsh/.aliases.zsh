@@ -37,8 +37,8 @@ alias lsrc='lsrc -v'
 alias cmatrix='cmatrix ; c'
 alias theme='/home/xevil/.ricing/terminaltheme.sh'
 
-alias gs='git status'
-alias gl='git log'
+alias gs='c ; git status'
+alias gl='c ; git log'
 alias gc='git commit -c'
 alias gr='git reset HEAD --hard'
 
