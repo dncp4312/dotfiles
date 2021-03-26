@@ -15,8 +15,11 @@ alias pCC='paccache -rk1 -ruk0'
 
 alias gpref='nano /etc/default/grub'
 alias gcnfup='grub-mkconfig -o /boot/grub/grub.cfg'
-alias sysrun='systemctl start'
-alias sysstp='systemctl stop'
+
+alias sys='sudo sys'
+alias sysrun='sudo systemctl start'
+alias sysstp='sudo systemctl stop'
+alias sysres='sudo systemctl restart'
 
 alias running='systemctl --type=service --state=running'
 alias enabled='systemctl list-unit-files | grep enabled'
@@ -34,7 +37,9 @@ alias lsrc='lsrc -v'
 alias cmatrix='cmatrix ; c'
 alias theme='/home/xevil/.ricing/terminaltheme.sh'
 
+alias gs='git status'
+alias gl='git log'
+alias gc='git commit -c'
 alias gr='git reset HEAD --hard'
 
-# alias ls='ls -la --color'
 alias mi='micro'
