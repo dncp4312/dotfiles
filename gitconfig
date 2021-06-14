@@ -1,5 +1,8 @@
 [user]
 	name = dncp4312
 	email = 24888745+dncp4312@users.noreply.github.com
-[core]
-	editor = nano
+
+[alias]
+	blot = log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s' --abbrev-commit
+	blog = log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	glo = log --graph --abbrev-commit --decorate  --first-parent --oneline
