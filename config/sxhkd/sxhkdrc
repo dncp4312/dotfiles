@@ -5,9 +5,15 @@
 super + f
 	firefox
 
+super + b
+	brave
+
 super + v
 	vlc
 
+super + c
+	vscodium
+	
 Print
 	import -window root /home/xevil/Pictures/Screenshots/capture_$(date +%F_%H%M%S).png
 
@@ -17,14 +23,21 @@ super + Home
 super + End
 	shutdown now
 
-meta + e
-	dolphin -style kvantum
+super + e
+	thunar
+#	dolphin -style kvantum
 
 alt + F4
 	bspc node -c
 
-#F12
-	bspc rule -a \* -o state=floating && tdrop -w 50% -h 45% -x 25% -y 00% alacritty   
+alt + F12
+	feh --recursive --bg-fill --randomize /home/xevil/Drives/Wallpapers/.Chicks
+
+super + 9
+	picom-trans -c -5
+
+super + 0
+	picom-trans -c +5
 
 ############
 # defaults #
@@ -92,12 +105,13 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
+alt + {_,shift + }Tab
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
+# super + bracket{left,right}
+super + {_,shift + }Tab
+	bspc desktop -f {next,prev}.local
 
 # focus the last node/desktop
 super + {grave,Tab}
