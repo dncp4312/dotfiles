@@ -9,6 +9,7 @@ alias es="vim ~/.config/sxhkd/sxhkdrc"
 alias eb="vim ~/.config/bspwm/bspwmrc"
 alias ec="vim ~/.config/picom/picom.conf"
 alias er="vim ~/.config/polybar/config.ini"
+alias ev="vim ~/.vimrc"
 
 alias pQ='pacman -Q'
 alias pT='pactree -d 1'
@@ -59,6 +60,9 @@ alias di='docker images'
 alias dcu='docker-compose up -d'
 alias dcd='docker-compose down'
 
-alias k='xdotool k'
+alias k='xdotool key'
 alias ku='xdotool keyup'
 alias kd='xdotool keydown'
+
+alias bq='bspc quit'
+alias br='bspc wm -r'
