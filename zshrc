@@ -17,6 +17,8 @@ show_colour() {
 
 run() { nohup $1 $2 > /dev/null & disown }
 
+rb() { curl cht.sh/ruby/$1 }
+
 ###################################################################################################################################################################
 #####                                                                         themes                                                                          #####
 ###################################################################################################################################################################
@@ -31,6 +33,7 @@ run() { nohup $1 $2 > /dev/null & disown }
   [[ ! -f /home/xevil/.zsh/.grml.zsh ]]    || source /home/xevil/.zsh/.grml.zsh
   [[ ! -f /home/xevil/.zsh/.p10k.zsh ]]    || source /home/xevil/.zsh/.p10k.zsh     ;   source /home/xevil/.zsh/.p10k/powerlevel10k.zsh-theme
   [[ ! -f /home/xevil/.zsh/.aliases.zsh ]] || source /home/xevil/.zsh/.aliases.zsh
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ###################################################################################################################################################################
 #####                                                                      customizations                                                                     #####
@@ -39,4 +42,6 @@ run() { nohup $1 $2 > /dev/null & disown }
 p10k finalize
 theme xeha 
 bindkey -v
-#theme liquid-carbon-transparent 
+eval "$(rbenv init -)"
+eval $(thefuck --alias)
+#cd ~/Projects/hta_be/spec
