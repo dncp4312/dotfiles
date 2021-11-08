@@ -2,6 +2,9 @@
 # wm independent hotkeys #
 ##########################
 
+super + r
+    ~/.config/rofi/powermenu/powermenu.sh
+
 super + f
 	firefox
 
@@ -24,14 +27,15 @@ super + End
 	shutdown now
 
 super + e
-	thunar
+	dolphin
+#	thunar
 #	dolphin -style kvantum
 
 alt + F4
 	bspc node -c
 
 alt + F12
-	feh --recursive --bg-fill --randomize /home/xevil/Drives/Wallpapers/.Chicks
+	feh --recursive --bg-fill --randomize /home/xevil/Drives/Wallpapers
 
 super + 9
 	picom-trans -c -5
@@ -124,9 +128,12 @@ super + {o,i}
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+super + {_,shift + }{1-5}
+	bspc {desktop -f,node -d} '^{1-5}'
+	#bspc {desktop -f,node -d} '^{1-9,10}'
 
+alt + {_,shift + }{1-5}
+    bspc {desktop -f, node -d} '^{6-9,10}'
 #
 # preselect
 #
