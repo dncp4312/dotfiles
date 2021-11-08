@@ -1,23 +1,27 @@
 #! /bin/sh
-
+xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x90 --rotate normal
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 xsetroot -cursor_name left_ptr
-setleds -D +num
+#setleds -D +num
 picom &
 #wal -i $waloc
 nitrogen --restore
+#superpaper &
+
 zsh ~/.config/polybar/launch.sh
 
-bspc monitor -d I II III IV V
+bspc monitor HDMI-3 -d I II III IV V
+bspc monitor DP-2 -d VI VII VIII IX X
+#bspc monitor DP-2 -d I II III IV V
 
-bspc config window_gap            6
+bspc config window_gap            4
 bspc config border_width          4
 bspc config focused_border_color  "#8a2be2"
-#bspc config focused_border_color  "#ff0000"
 bspc config normal_border_color  "#000000"
 
 bspc config split_ratio          0.5
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
+#xwinwrap -g 1920x1080 -ov -- mpv -wid WID --loop --no-audio ~/Videos/Itachi\ Uchiha\ Birds\ 4K-5p1SmbHPElo.webm
