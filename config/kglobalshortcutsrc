@@ -2,7 +2,7 @@
 _k_friendly_name=Activity Manager
 switch-to-activity-=none,none,
 switch-to-activity-51762ee5-f2fa-44f6-8844-64e3c667b77f=Meta+Ctrl+Left,none,Switch to activity "Default"
-switch-to-activity-7da48200-e9e7-4711-8b40-1d0e3da058d4=Meta+Ctrl+Right,none,Switch to activity "Trial"
+switch-to-activity-7da48200-e9e7-4711-8b40-1d0e3da058d4=Meta+Ctrl+Right,none,Switch to activity "Denn"
 switch-to-activity-bbe79483-686e-4e86-9fd9-914cc6bc318c=none,none,Switch to activity "Default"
 switch-to-activity-f11265cf-fbc9-4bf5-812c-180449dac2c2=none,none,Switch to activity "Default"
 
@@ -29,7 +29,7 @@ display=Display\tMeta+P,Display\tMeta+P,Switch Display
 [khotkeys]
 _k_friendly_name=Custom Shortcuts Service
 {1867529c-57a0-4d86-b981-e6ac6de16bc4}=Meta+V,none,Vlc
-{6887001a-0646-4b25-b23f-c07cfb004710}=Meta+T,none,Alacritty
+{6887001a-0646-4b25-b23f-c07cfb004710}=Meta+Return,none,Alacritty
 {8340ea77-08d5-40e4-975e-5f7714e112b8}=`,none,TDrop
 {8e081785-dc77-41d7-8c48-3c841c342c9d}=Meta+E,none,Dolphin
 {af584040-6cbb-4efe-a758-c3608bcfbc9c}=none,none,Launch Konsole
