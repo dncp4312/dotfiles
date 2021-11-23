@@ -8,8 +8,8 @@ super + r
 super + f
 	firefox
 
-super + b
-	brave
+#super + b
+#	brave
 
 super + v
 	vlc
@@ -26,16 +26,17 @@ super + Home
 super + End
 	shutdown now
 
+super + Delete
+	sh i3lock.sh
+
 super + e
 	dolphin
-#	thunar
-#	dolphin -style kvantum
 
 alt + F4
 	bspc node -c
 
-alt + F12
-	feh --recursive --bg-fill --randomize /home/xevil/Drives/Wallpapers
+#alt + F12
+	#feh --recursive --bg-fill --randomize /home/xevil/Pictures/Wallpapers
 
 super + 9
 	picom-trans -c -5
@@ -46,8 +47,6 @@ super + 0
 ############
 # defaults #
 ############
-
-# terminal emulator
 
 super + Return
 	alacritty
