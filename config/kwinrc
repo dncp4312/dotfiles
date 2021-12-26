@@ -17,6 +17,11 @@ zPosition=716
 [Effect-PresentWindows]
 BorderActivateAll=9
 
+[Effect-Wobbly]
+Drag=90
+Stiffness=6
+WobblynessLevel=2
+
 [ElectricBorders]
 TopLeft=None
 
@@ -29,9 +34,12 @@ coverswitchEnabled=true
 desktopchangeosdEnabled=false
 flipswitchEnabled=true
 highlightwindowEnabled=true
+kwin4_effect_dimscreenEnabled=true
+kwin4_effect_translucencyEnabled=true
 minimizeallEnabled=false
 synchronizeskipswitcherEnabled=false
 videowallEnabled=false
+wobblywindowsEnabled=true
 
 [TabBox]
 BorderActivate=9
