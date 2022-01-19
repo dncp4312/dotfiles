@@ -1,8 +1,5 @@
 syntax on
-
 set nocompatible
-set noerrorbells
-set tabstop=4 softtabstop=4
 set shiftwidth=4
 set number
 set relativenumber
@@ -14,89 +11,170 @@ set ignorecase
 set incsearch
 set shell=/bin/zsh
 set formatoptions-=cor
+set splitright
+set splitbelow
 set path+=**
+set termwinsize=10x0
 " set cursorline
 " set cursorlineopt=number
-
-highlight Comment ctermfg=8 cterm=italic,bold
-highlight LineNr ctermfg=4 
-" highlight CursorLineNr ctermbg=4 ctermfg=7
-
 " set list listchars=tab:>,trail:<,nbsp:.
 
+
+"###### Lets ########
 let @c = "ggyG"
 let mapleader = " "
+"###### Lets ########
+
+
+"###### Remaps #############################
+map <C-g> :term<CR>
+map <C-S-g> :bo term<CR>
+map <C-A> ggVG
+map <silent> <C-H> :noh<CR>
+map <C-P> :FZF<CR>
+map <C-s> :so ~/.vimrc<CR>
+
+nmap <F2> <Plug>(coc-rename)
+nnoremap Y y$
+nnoremap <C-k> <C-w>
+" nnoremap <Leader>1 1gt
+" nnoremap <Leader>2 2gt
+" nnoremap <Leader>3 3gt
+" nnoremap <Leader>4 4gt
+" nnoremap <Leader>5 5gt
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+nnoremap <silent> <Leader>l :vsplit<CR>
+nnoremap <silent> <Leader>j :split<CR>
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 inoremap jk <ESC>
 inoremap , ,<C-G>u
 inoremap . .<C-G>u
 imap <Leader>j <Backspace>
+"###### Remaps #############################
 
-nnoremap Y y$
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-nnoremap <Leader><Leader> <C-^>
-nnoremap <silent> <Leader>l :vsplit<CR>
-nnoremap <silent> <Leader>j :split<CR>
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-l> <C-w>l
 
-map <C-A> ggVG
-map <C-P> :FZF<CR>
-map <silent> <C-H> :noh<CR>
-
+"###### Moving Lines ###################
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '>-2<CR>gv=gv
 inoremap <C-j> <esc>:m .+1<CR>==
 inoremap <C-k> <esc>:m .-2<CR>==
-nnoremap <leader>j <esc>:m .+1<CR>==
-nnoremap <leader>k <esc>:m .-2<CR>==
+" nnoremap <leader>j <esc>:m .+1<CR>==
+" nnoremap <leader>k <esc>:m .-2<CR>==
+"###### Moving Lines ###################
 
+
+"###### Highlighting ###########################
+highlight IncSearch ctermbg=darkmagenta ctermfg=white
+highlight Search ctermbg=darkmagenta ctermfg=white
+
+highlight LineNrAbove ctermfg=darkcyan
+highlight LineNr ctermfg=white
+highlight LineNrBelow ctermfg=cyan
+
+highlight VertSplit ctermfg=darkmagenta ctermbg=white
+highlight Visual ctermbg=darkmagenta ctermfg=white
+
+highlight Comment ctermfg=darkgrey cterm=italic,bold
+highlight Constant ctermfg=darkyellow
+highlight Special ctermfg=green
+highlight SpecialChar ctermfg=red
+highlight Identifier ctermfg=darkcyan
+highlight Statement ctermfg=darkmagenta
+highlight PreProc ctermfg=magenta
+highlight Type ctermfg=yellow
+highlight Underline ctermfg=red cterm=reverse
+highlight Ignore ctermfg=red cterm=reverse
+highlight String ctermfg=green
+highlight Boolean ctermfg=red
+highlight Number ctermfg=red
+
+" highlight Folded
+" highlight DiffAdd 
+" highlight DiffChange
+" highlight DiffDelete
+" highlight DiffText
+
+highlight Pmenu ctermbg=darkmagenta ctermfg=white
+highlight PmenuSel ctermbg=green ctermfg=yellow
+
+highlight MatchParen ctermbg=darkmagenta ctermfg=white
+"###### Highlighting ###########################
+"
+"###### Highlighting ###########################
+" highlight LineNr ctermfg=4 
+" highlight Comment ctermfg=8 cterm=italic,bold
+" highlight Search ctermbg=5 ctermfg=7
+" highlight Pmenu ctermbg=5 ctermfg=7
+" highlight MatchParen ctermbg=5 ctermfg=7
+" highlight Cursor ctermfg=7
+" highlight Visual ctermbg=5 ctermfg=15
+" highlight CursorLine term=bold ctermbg=8
+" highlight CursorLineNr ctermbg=4 ctermfg=7
+" set list listchars=tab:>,trail:<,nbsp:.
+"###### Highlighting ###########################
+
+
+"###### Plugins ###################################################
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
+Plug 'andymass/vim-matchup'
+Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'thoughtbot/vim-rspec'
-"SnipMate
+" Plug 'ap/vim-css-color'
+" Plug 'ecomba/vim-ruby-refactoring' " Plug 'matchit.vim'
+" Plug 'tpope/vim-rails'
+" SnipMate
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
+Plug 'jiangmiao/auto-pairs'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
+"###### Plugins ###################################################
 
-"SnipMate :
-let g:snipMate = { 'snippet_version' : 1}
 
-"Lightline :
+"###### Lightline ####################################################################
 set laststatus=2
 set noshowmode
-let g:lightline = { 
-	         \       'colorscheme' : 'molokai',
-             \       'active' 	   : {
-			 \   		'left'     : [
-			 \   			[ 'mode', 'paste' ],
-			 \   			[ 'readonly', 'absolutepath', 'modified' ]
-			 \   			],
-			 \   		'right'     : [
-			 \   			[ 'lineinfo' ],
-			 \   		    [ 'percent'  ],
-			 \   		    [ 'filetype' ],
- 			 \   			],
-	         \       },
-			 \       'component' : {
-	         \          'hellow' : 'Hey XeviL !'
-	         \       },
-             \    }
+let g:lightline =   { 
+	          \   'colorscheme' : 'molokai',
+                  \   'active' 	    : {
+		  \   	'left'      : [ [ 'mode', 'paste' ],
+		  \  			[ 'readonly', 'absolutepath', 'modified' ] ],
+		  \  	'right'     : [ [ 'lineinfo' ],
+		  \  		        [ 'percent'  ],
+		  \  		        [ 'filetype' ], ], },
+		  \      'component' : {
+	          \         'hellow' : 'Hey XeviL !' },
+                  \   }
+"###### Lightline ####################################################################
 
-"Rspec :
+
+"###### RSpec #####################################################
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>n :call RunNearestSpec()<CR>
 " map <Leader>l :call RunLastSpec()<CR>
+"##################################################################
+
+"###### CoC #################################################################
+let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets', 
+		  	      \'coc-solargraph', 'coc-pairs',
+		  	      \'coc-json']
+source $HOME/.vim/plug-config/coc.vim
+"###### CoC #################################################################
+
+"###### SnipMate ##########################
+let g:snipMate = { 'snippet_version' : 1}
+"###### SnipMate ##########################
