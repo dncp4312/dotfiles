@@ -7,6 +7,49 @@
 # Find a broken theme? Want to add a missing one? PRs are welcome.
 
 themes=$(cat <<!
+
+xeha
+0: #878787
+1: #92140c
+2: #254d32
+3: #e28413
+4: #001D4A
+5: #9933cc
+6: #44b4cc
+7: #777777
+8: #555555
+9: #ea2b1f
+10: #00a676
+11: #fcd628
+12: #007fff
+13: #ff00ff
+14: #00ffff
+15: #ffffff
+background: #000000
+foreground: #dddddd
+cursorColor: #ffffff
+
+xeha_old
+0: #878787
+1: #ff6600
+2: #ccff04
+3: #ffcc00
+4: #44b4cc
+5: #9933cc
+6: #44b4cc
+7: #f5f5f5
+8: #555555
+9: #ff0000
+10: #00ff00
+11: #ffff00
+12: #007FFF
+13: #ff00ff
+14: #00ffff
+15: #e5e5e5
+background: #000000
+foreground: #dddddd
+cursorColor: #ffffff
+
 3024-day
 0: #090300
 1: #db2d20
@@ -4163,26 +4206,6 @@ background: #32302f
 foreground: #ebdbb2
 cursorColor: #ebdbb2
 
-xeha
-0: #878787
-1: #ff6600
-2: #ccff04
-3: #ffcc00
-4: #44b4cc
-5: #9933cc
-6: #44b4cc
-7: #f5f5f5
-8: #555555
-9: #ff0000
-10: #00ff00
-11: #ffff00
-12: #007FFF
-13: #ff00ff
-14: #00ffff
-15: #e5e5e5
-background: #000000
-foreground: #ffffff
-cursorColor: #ffffff
 !
 )
 
