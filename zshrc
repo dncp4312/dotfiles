@@ -17,12 +17,61 @@ show_colour() {
 
 run() { nohup $1 $2 > /dev/null & disown }
 
+f() { find . $1 | rg $1 }
+
+rv() { selection=$(rg $1 --vimgrep | fzf)
+       line=$(echo $selection| cut -d: -f2)
+       file=$(echo $selection| cut -d: -f1)
+       vim +$line $file
+     }
+
 rb() { curl cht.sh/ruby/$1 }
 
+installed () { awk '/%NAME%/{getline;PKG=$1} /%INSTALLDATE%/{getline;IDATE=strftime("%Y-%m-%d %H:%M",$1);print IDATE" "PKG}' /var/lib/pacman/local/*/desc|sort }
+
+ppr() {
+	current=$(git branch --show-current)
+	green='\033[0;32m'
+	nc='\033[0m'
+
+	printf "\n${green}Checking out master...${nc}\n"
+	git checkout master
+
+	printf "\n${green}Fetching upstream master...${nc}\n"
+	git fetch upstream master
+
+	printf "\n${green}Merging upstream master...${nc}\n"
+	git merge upstream/master --ff-only
+
+	printf "\n${green}Updating origin...${nc}\n"
+	git push origin master
+
+	printf "\n${green}Checking out $current...${nc}\n"
+	git checkout $current
+
+	printf "\n${green}Rebasing...${nc}\n"
+	git rebase master
+
+	printf "\n${green}Updating remote...${nc}\n"
+	git push -u origin $current
+
+	printf "\n${green}Pull-request prepared.${nc}\n"
+	printf "\n${green}Opening bitbucket...${nc}\n"
+	firefox "https://bitbucket.org/dncp4312/hta_be/branches/?status=all"	
+}
+
+function vif() { file=$(fzf) || return ; vim "$file" }
+function fcd() { dir=$(find -type d | fzf) || return ; 
+		 clear ; echo "\033[0;30mCurrent Directory :\033[0m"   
+		 cd "$dir" ; exa --group-directories-first --color=always }
+
 ###################################################################################################################################################################
-#####                                                                         themes                                                                          #####
+#####                                                                        shortcuts                                                                        #####
 ###################################################################################################################################################################
 
+# bindkey -s '^o' 'vim $(fzf) ^M'
+bindkey -s '^p' 'vif ^M'
+bindkey -s '^g' 'fcd ^M'
 #(cat ~/.cache/wal/sequences &)
 
 ###################################################################################################################################################################
@@ -44,4 +93,4 @@ theme xeha
 bindkey -v
 eval "$(rbenv init -)"
 eval $(thefuck --alias)
-#cd ~/Projects/hta_be/spec
+cd ~/Projects/hta_be/
