@@ -9,6 +9,9 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export SYSTEMD_EDITOR=vim
 export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_QPA_PLATFORMTHEME="qt5ct"
+export EXA_COLORS="da=33"
 
 [[ -f ~/.zshrc ]] && . ~/.zshrc
+# [[ $XDG_VTNR -eq 1 && -z $SSH_TTY ]] && tbsm r 1
+# [[ $XDG_VTNR -eq 5 && -z $SSH_TTY ]] && tbsm r 2
 [[ $XDG_VTNR -le 2 && -z $SSH_TTY ]] && tbsm
