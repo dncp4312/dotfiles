@@ -1,5 +1,5 @@
-
 window:
+  opacity: 0.85
 
   dimensions:
     columns: 110
@@ -163,26 +163,26 @@ colors:
     #  foreground: '#1d1f21'
 
   # Normal colors
-  normal:
-    black:   '#1d1f21'
-    red:     '#cc6666'
-    green:   '#9DCB41'
-    yellow:  '#f0c674'
-    blue:    '#1d99f3'
-    magenta: '#b294bb'
-    cyan:    '#8abeb7'
-    white:   '#c5c8c6'
-
-  # Bright colors
-  bright:
-    black:   '#7F8C8D' #KonsoleBlack
-    red:     '#ed1515' #KonsoleRed
-    green:   '#81CC39'
-    yellow:  '#e7c547'
-    blue:    '#1d99f3' #KonsoleBlue
-    magenta: '#c397d8'
-    cyan:    '#70c0b1'
-    white:   '#eaeaea'
+  # normal:
+  #   black:   '#1d1f21'
+  #   red:     '#cc6666'
+  #   green:   '#9DCB41'
+  #   yellow:  '#f0c674'
+  #   blue:    '#1d99f3'
+  #   magenta: '#b294bb'
+  #   cyan:    '#8abeb7'
+  #   white:   '#c5c8c6'
+  #
+  # # Bright colors
+  # bright:
+  #   black:   '#7F8C8D' #KonsoleBlack
+  #   red:     '#ed1515' #KonsoleRed
+  #   green:   '#81CC39'
+  #   yellow:  '#e7c547'
+  #   blue:    '#1d99f3' #KonsoleBlue
+  #   magenta: '#c397d8'
+  #   cyan:    '#70c0b1'
+  #   white:   '#eaeaea'
 
   # Dim colors
   #
@@ -253,7 +253,6 @@ colors:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.85
 
 #selection:
   # This string contains all characters that are used as separators for
