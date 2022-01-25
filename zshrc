@@ -29,6 +29,8 @@ rb() { curl cht.sh/ruby/$1 }
 
 installed () { awk '/%NAME%/{getline;PKG=$1} /%INSTALLDATE%/{getline;IDATE=strftime("%Y-%m-%d %H:%M",$1);print IDATE" "PKG}' /var/lib/pacman/local/*/desc|sort }
 
+gsd() { git stash drop stash@{$1} }
+
 ppr() {
 	current=$(git branch --show-current)
 	green='\033[0;32m'
