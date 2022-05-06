@@ -1,12 +1,26 @@
 ##########################
+#    experimentation     #
+##########################
+# super + n ; {h,j,k,l} ; {h,j,k,l}
+# 	target=$(bspc query -N -n {west,south,north,east}) \
+# 	    && bspc node "$target" -p {west,south,north,east} \
+# 	    && bspc node -n "$target"
+
+super + x
+	xdg-open ~/Projects/hta_be/dev/coverage/index.html
+
+# super + x
+	# scratchspace.sh vimwiki.sh 
+	# scpd.bs alacritty --class VimWiki -e theme xeha ; vim +VimwikiIndex
+
+##########################
 # wm independent hotkeys #
 ##########################
-
 super + c
 	vscodium
 	
 super + d
-	discord
+	scratchspace.sh discord
 
 super + e
 	dolphin
@@ -23,8 +37,17 @@ super + r
 super + v
 	vlc
 
+super + w
+	vboxmanage startvm 'Win10_Test'
+	
+super + shift + w
+	vboxmanage controlvm 'Win10_Test' poweroff
+
 alt + F4
 	bspc node -c
+
+super + F4
+	bspc node -k
 
 super + Home
 	reboot
@@ -38,8 +61,17 @@ super + Delete
 Print
 	import -window root /home/xevil/Pictures/Screenshots/capture_$(date +%F_%H%M%S).png
 
-#alt + F12
-	#feh --recursive --bg-fill --randomize /home/xevil/Pictures/Wallpapers
+alt + Print
+	import /home/xevil/Projects/hta_be/dev/shots/capture_$(date +%F_%H%M%S).png
+
+alt + F10
+	feh --recursive --bg-fill --randomize /home/xevil/Pictures/.Chicks
+#
+# alt + F11
+# 	feh --recursive --bg-fill --randomize /home/xevil/Pictures/.Chicks/MultiMagic --no-xinerama
+
+alt + F12
+	feh --recursive --bg-fill --randomize /home/xevil/Pictures/Wallpapers
 
 super + 9
 	picom-trans -c -5
@@ -91,7 +123,7 @@ super + b
 ###############
 
 # set the window state
-super + {t,shift + t,s,f}
+super + {t,shift + t,s,shift + f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -102,7 +134,18 @@ super + ctrl + {m,x,y,z}
 # focus/swap #
 ##############
 
-# focus the node in the given direction
+# focus the node in the given direction _ multi_monitor
+# super + {_, shift +, ctrl + }{h,j,k,l}
+# 	mode={f,s,n}; \
+# 	dir={west,south,north,east}; \
+# 	echo $mode >> ~/fl; echo $dir >> ~/fl ; \
+# 	if [$mode = 'f']; then \
+# 	    bspc node -f $dir.local || bspc monitor -f direction; \
+# 	else; \
+# 	    bspc node -$mode $dir.local || bspc node -m $dir --follow; \
+# 	fi
+
+# # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
@@ -117,7 +160,10 @@ alt + {_,shift + }Tab
 # focus the next/previous desktop in the current monitor
 # super + bracket{left,right}
 super + {_,shift + }Tab
-	bspc desktop -f {next,prev}.local
+	bspc desktop -f {next,prev}.local.occupied
+
+super + ctrl + Tab
+	rofi -show window
 
 # focus the last node/desktop
 super + {grave,Tab}
@@ -131,7 +177,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-5}
-	bspc {desktop -f,node -d} '^{1-5}' --follow
+	bspc {desktop -f,node -d} '^{1-5}'
 	#bspc {desktop -f,node -d} '^{1-9,10}'
 
 alt + {_,shift + }{1-5}
@@ -141,16 +187,12 @@ alt + {_,shift + }{1-5}
 #
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
+super + ctrl + {h,j,k,l,space}
+	bspc node -p {west,south,north,east,cancel}
 
 # preselect the ratio
 super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
-
-# cancel the preselection for the focused node
-super + ctrl + space
-	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
 super + ctrl + shift + space
