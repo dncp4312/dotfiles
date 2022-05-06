@@ -10,7 +10,6 @@ set hlsearch
 set ignorecase
 set incsearch
 set shell=/bin/zsh
-set formatoptions-=cor
 set splitright
 set splitbelow
 set path+=**
@@ -18,12 +17,21 @@ set termwinsize=10x0
 " set cursorline
 " set cursorlineopt=number
 " set list listchars=tab:>,trail:<,nbsp:.
-
+" filetype on
+filetype plugin on
+" filetype indent on
 
 "###### Lets ########
 let @c = "ggyG"
 let mapleader = " "
 "###### Lets ########
+
+
+"###### AutoCommands #############################
+" autocmd BufWritePre * normal gg=G``
+" autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+autocmd BufWinEnter,BufNewFile * setlocal formatoptions-=cro
+"###### AutoCommands #############################
 
 
 "###### Remaps #############################
@@ -32,9 +40,11 @@ map <C-S-g> :bo term<CR>
 map <C-A> ggVG
 map <silent> <C-H> :noh<CR>
 map <C-P> :FZF<CR>
-map <C-s> :so ~/.vimrc<CR>
+map <Leader>= gg=G``
 
 nmap <F2> <Plug>(coc-rename)
+nmap <Leader>ff g_zf%
+nmap <Leader>/ gcc
 nnoremap Y y$
 nnoremap <C-k> <C-w>
 " nnoremap <Leader>1 1gt
@@ -46,6 +56,7 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+" noremap <ESC> <Nop>
 nnoremap <silent> <Leader>l :vsplit<CR>
 nnoremap <silent> <Leader>j :split<CR>
 " nnoremap <C-j> <C-w>j
@@ -53,10 +64,10 @@ nnoremap <silent> <Leader>j :split<CR>
 " nnoremap <C-k> <C-w>k
 " nnoremap <C-l> <C-w>l
 
-inoremap jk <ESC>
+" inoremap jk <ESC>
 inoremap , ,<C-G>u
 inoremap . .<C-G>u
-imap <Leader>j <Backspace>
+" imap <Leader>j <Backspace>
 "###### Remaps #############################
 
 
@@ -78,8 +89,9 @@ highlight LineNrAbove ctermfg=darkcyan
 highlight LineNr ctermfg=white
 highlight LineNrBelow ctermfg=cyan
 
-highlight VertSplit ctermfg=darkmagenta ctermbg=white
+highlight VertSplit ctermfg=darkmagenta ctermbg=darkmagenta
 highlight Visual ctermbg=darkmagenta ctermfg=white
+highlight Folded ctermbg=none ctermfg=magenta cterm=italic,bold
 
 highlight Comment ctermfg=darkgrey cterm=italic,bold
 highlight Constant ctermfg=darkyellow
@@ -102,7 +114,7 @@ highlight Number ctermfg=red
 " highlight DiffText
 
 highlight Pmenu ctermbg=darkmagenta ctermfg=white
-highlight PmenuSel ctermbg=green ctermfg=yellow
+highlight PmenuSel ctermbg=blue ctermfg=yellow
 
 highlight MatchParen ctermbg=darkmagenta ctermfg=white
 "###### Highlighting ###########################
@@ -123,6 +135,7 @@ highlight MatchParen ctermbg=darkmagenta ctermfg=white
 
 "###### Plugins ###################################################
 call plug#begin('~/.vim/plugged')
+Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
@@ -148,32 +161,36 @@ call plug#end()
 set laststatus=2
 set noshowmode
 let g:lightline =   { 
-	          \   'colorscheme' : 'molokai',
-                  \   'active' 	    : {
-		  \   	'left'      : [ [ 'mode', 'paste' ],
-		  \  			[ 'readonly', 'absolutepath', 'modified' ] ],
-		  \  	'right'     : [ [ 'lineinfo' ],
-		  \  		        [ 'percent'  ],
-		  \  		        [ 'filetype' ], ], },
-		  \      'component' : {
-	          \         'hellow' : 'Hey XeviL !' },
-                  \   }
+	    \   'colorscheme' : 'molokai',
+	    \   'active' 	    : {
+		\   	'left'      : [ [ 'mode', 'paste' ],
+		\  			[ 'readonly', 'absolutepath', 'modified' ] ],
+		\  	'right'     : [ [ 'lineinfo' ],
+		\  		        [ 'percent'  ],
+		\  		        [ 'filetype' ], ], },
+		\      'component' : {
+		    \         'hellow' : 'Hey XeviL !' },
+		    \   }
 "###### Lightline ####################################################################
 
 
 "###### RSpec #####################################################
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
-map <Leader>n :call RunNearestSpec()<CR>
+nmap <Leader>t :call RunCurrentSpecFile()<CR>
+nmap <Leader>a :call RunAllSpecs()<CR>
+nmap <Leader>n :call RunNearestSpec()<CR>
 " map <Leader>l :call RunLastSpec()<CR>
 "##################################################################
 
 "###### CoC #################################################################
 let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets', 
-		  	      \'coc-solargraph', 'coc-pairs',
-		  	      \'coc-json']
+	    \'coc-solargraph', 'coc-pairs',
+	    \'coc-json']
 source $HOME/.vim/plug-config/coc.vim
 "###### CoC #################################################################
+
+"###### VimWiki ##########################
+let g:vimwiki_list = [ { 'path' : '~/Documents/Vimwiki/' } ]
+"###### VimWiki ##########################
 
 "###### SnipMate ##########################
 let g:snipMate = { 'snippet_version' : 1}
