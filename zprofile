@@ -1,4 +1,5 @@
-export DISPLAY=:1
+#export DISPLAY=:1
+export DISPLAY=:0
 export waloc="$(grep "file" /home/xevil/.config/nitrogen/bg-saved.cfg | cut -d "=" -f 2)"
 export PATH="$PATH:/home/xevil/.local/bin"
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -12,6 +13,5 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 export EXA_COLORS="da=33"
 
 [[ -f ~/.zshrc ]] && . ~/.zshrc
-# [[ $XDG_VTNR -eq 1 && -z $SSH_TTY ]] && tbsm r 1
-# [[ $XDG_VTNR -eq 5 && -z $SSH_TTY ]] && tbsm r 2
-[[ $XDG_VTNR -le 2 && -z $SSH_TTY ]] && tbsm
+# [[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && tbsm
+[[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx -- vt1 &> /dev/null
