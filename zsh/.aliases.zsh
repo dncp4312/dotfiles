@@ -8,8 +8,10 @@ alias cr="cd ~/.rbenv/versions/2.7.4/lib/ruby/2.7.0"
 alias gems="cd ~/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems ; c"
 alias rc="rails c"
 alias rt="rails c -e test"
+alias rst="rails s -e test"
 alias sk="be sidekiq"
 alias -s rb=vim
+alias ph='cd ~/.local/share/pry'
 
 #Aliases
 
@@ -73,6 +75,8 @@ alias gs='c ; git status'
 alias gl='c ; git log --oneline'
 alias gc='git commit -m'
 alias gr='git reset HEAD --hard'
+alias gb='git branch'
+alias gum='git reset HEAD~1 --hard'
 alias gt='git blot'
 alias gh='git glo'
 alias gd='git checkout'
@@ -80,6 +84,9 @@ alias gsm='git stash push -m'
 alias gsp='git stash pop'
 alias gsl='git stash list'
 alias gsa='git stash apply --index'
+alias gca='git commit --amend --no-edit'
+alias gwa='git worktree add'
+alias gwr='git worktree remove'
 
 alias d='docker'
 alias di='c;docker images'
@@ -97,3 +104,4 @@ alias theme='/home/xevil/.ricing/terminaltheme.sh'
 alias matrix="unimatrix -n -s 94 -l 'o' -f | lolcat"
 alias discord="LIBVA_DRIVER_NAME=i915 discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-feature=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
 alias fzf="fzf --height=80% --layout=reverse-list --border=horizontal --no-info --preview='bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
+alias ncdu='ncdu --color dark'
