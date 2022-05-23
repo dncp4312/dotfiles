@@ -1,6 +1,14 @@
 ##########################
 # wm independent hotkeys #
 ##########################
+super + c
+	vscodium
+	
+super + d
+	scratchspace.sh discord
+
+super + e
+	thunar
 
 super + f
 	firefox
@@ -18,10 +26,10 @@ Print
 	import -window root /home/xevil/Pictures/Screenshots/capture_$(date +%F_%H%M%S).png
 
 super + Home
-	reboot
+	systemctl reboot
 
 super + End
-	shutdown now
+	systemctl poweroff
 
 super + e
 	thunar
@@ -46,7 +54,7 @@ super + 0
 # terminal emulator
 
 super + Return
-	alacritty
+	LIBGL_ALWAYS_SOFTWARE=1 alacritty
 
 # program launcher
 alt + @space

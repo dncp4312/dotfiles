@@ -1,15 +1,21 @@
 #! /bin/sh
 
+#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x0 --rotate normal
+#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x90 --rotate normal
+# xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x180 --rotate normal
+
+nitrogen --restore &
+sh ~/.config/polybar/launch.sh &
+xsetroot -cursor_name left_ptr &
 pgrep -x sxhkd > /dev/null || sxhkd &
+# picom &
+# feh --recursive --bg-fill --randomize /home/xevil/Pictures/Wallpapers
+#exec xautolock -time 5 -locker i3lock.sh &
 
-xsetroot -cursor_name left_ptr
-setleds -D +num
-picom &
-#wal -i $waloc
-nitrogen --restore
-zsh ~/.config/polybar/launch.sh
-
-bspc monitor -d I II III IV V
+bspc monitor VGA-1 -d 1 2 3 4 5 
+bspc monitor HDMI-3 -d 1 2 3 4 5 
+bspc monitor DP-2 -d firefox empty empty empty empty
+# bspc monitor DP-2 -d "  " "  " "" "" " ﭮ "
 
 bspc config window_gap            6
 bspc config border_width          4

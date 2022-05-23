@@ -1,3 +1,21 @@
+<<<<<<< Updated upstream
+=======
+#Temporary
+alias hb="cd ~/Projects/hta_be ; rails c"
+alias rs='clear ; bundle exec rspec'
+alias be='bundle exec'
+alias ruby='c;ruby'
+alias ht="cd ~/Projects/hta_be"
+alias cr="cd ~/.rbenv/versions/2.7.4/lib/ruby/2.7.0"
+alias gems="cd ~/.rbenv/versions/2.7.4/lib/ruby/gems/2.7.0/gems ; c"
+alias rc="bundle exec rails c"
+alias rt="bundle exec rails c -e test"
+alias rst="bundle exec rails s -e test"
+alias sk="be sidekiq"
+alias -s rb=vim
+alias ph='cd ~/.local/share/pry'
+
+>>>>>>> Stashed changes
 #Aliases
 
 alias x=exit
@@ -12,9 +30,9 @@ alias er="vim ~/.config/polybar/config.ini"
 alias ev="vim ~/.vimrc"
 
 alias pQ='pacman -Q'
-alias pT='pactree -d 1'
-alias pTf='pactree'
-alias pTr='pactree -r'
+alias dT='pactree -d 1'
+alias dTf='pactree'
+alias dTr='pactree -r -d 1'
 alias pS='sudo pacman -S'
 alias pR='sudo pacman -Rns'
 alias yS='yay -S --nodiffmenu'
