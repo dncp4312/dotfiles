@@ -1,3 +1,8 @@
+set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+set runtimepath+=$XDG_CONFIG_HOME/vim
+
 syntax on
 set nocompatible
 set shiftwidth=4
@@ -142,6 +147,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
+Plug 'psliwka/vim-smoothie'
 Plug 'thoughtbot/vim-rspec'
 " Plug 'ap/vim-css-color'
 " Plug 'ecomba/vim-ruby-refactoring' " Plug 'matchit.vim'
@@ -185,6 +191,7 @@ nmap <Leader>n :call RunNearestSpec()<CR>
 let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets', 
 	    \'coc-solargraph', 'coc-pairs',
 	    \'coc-json']
+" source $XDG_CONFIG_HOME/vim/plug-config/coc.vim
 source $HOME/.vim/plug-config/coc.vim
 "###### CoC #################################################################
 
