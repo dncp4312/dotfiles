@@ -1,0 +1,12 @@
+@import "xeha.rasi"
+
+window {
+    width:                25%;
+}
+
+listview {
+    lines:                5;
+    columns:              1;
+    dynamic:              false;
+    /* layout:               vertical; */
+}
