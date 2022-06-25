@@ -1,4 +1,3 @@
-#export DISPLAY=:1
 export DISPLAY=:0
 # export waloc="$(grep "file" $HOME/.config/nitrogen/bg-saved.cfg | cut -d "=" -f 2)"
 export PATH="$PATH:$HOME/.local/bin"
@@ -35,6 +34,5 @@ export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph
 export TIMEWARRIORDB="$XDG_CONFIG_HOME"/timewarrior
 
 [[ -f ~/.zshrc ]] && . ~/.zshrc
-# [[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && tbsm r 1
 [[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx "$XINITRC" -- vt1 &> /dev/null
 # [[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && tbsm r 1

@@ -13,8 +13,10 @@
     rb          () { curl cht.sh/ruby/$1 }
     gsd         () { git stash drop stash@{$1} }
     vif         () { file=$(fzf) && vim "$file" }
+    fdiff       () { diff -u $1 $2 | diff-so-fancy }
     run         () { nohup $1 $2 > /dev/null & disown }
     brighten    () { echo $1 > /sys/class/backlight/amdgpu_bl0/brightness }
+    setlive     () { echo $(readlink -f $1) > $XDG_CONFIG_HOME/live ; bspc wm -r }
     colormap    () { for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done }
     show_colour () { perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m \e[49m "};print "\n"' "$@" }
     installed   () { awk '/%NAME%/{getline;PKG=$1} /%INSTALLDATE%/{getline;IDATE=strftime("%Y-%m-%d %H:%M",$1);print IDATE" "PKG}' /var/lib/pacman/local/*/desc|sort }
@@ -22,7 +24,6 @@
 		     clear ; echo "\033[0;30mCurrent Directory :\033[0m"   
 		     cd "$dir" ; exa --group-directories-first --color=always }
 
-    # diff      () { diff -u $1 $2 | diff-so-fancy }
 
     rv() { selection=$(rg $1 --vimgrep | fzf)
 	   line=$(echo $selection| cut -d: -f2)
@@ -32,24 +33,25 @@
 
     update_master () {
 	    current=$(git branch --show-current)
-	    green='\033[0;32m'
+	    bliss='\e[0;35m'
+	    blissbold='\033[0;32m'
 	    nc='\033[0m'
-	    printf "\n${green}Checking out master...${nc}\n"      ; git checkout master
-	    printf "\n${green}Fetching upstream master...${nc}\n" ; git fetch upstream master
-	    printf "\n${green}Merging upstream master...${nc}\n"  ; git merge upstream/master --ff-only
-	    printf "\n${green}Updating origin...${nc}\n"          ; git push origin master
-	    printf "\n${green}Checking out $current...${nc}\n"    ; git checkout $current
+	    printf "\n${bliss}Checking out master...${nc}\n"      ; git checkout master
+	    printf "\n${bliss}Fetching upstream master...${nc}\n" ; git fetch upstream master
+	    printf "\n${bliss}Merging upstream master...${nc}\n"  ; git merge upstream/master --ff-only
+	    printf "\n${bliss}Updating origin...${nc}\n"          ; git push origin master
+	    printf "\n${bliss}Checking out $current...${nc}\n"    ; git checkout $current
 	}
 
     ppr () {
-	    green='\033[0;32m'
+	    bliss='\033[0;35m'
 	    nc='\033[0m'
 
 	    update_master
-	    printf "\n${green}Rebasing...${nc}\n"         ; git rebase master
-	    printf "\n${green}Updating remote...${nc}\n"  ; git push -u origin $(git branch --show-current)
+	    printf "\n${bliss}Rebasing...${nc}\n"         ; git rebase master
+	    printf "\n${bliss}Updating remote...${nc}\n"  ; git push -u origin $(git branch --show-current)
 
-	    printf "\n${green}Pull-request prepared.\nOpening bitbucket...${nc}"
+	    printf "\n${bliss}Pull-request prepared.\nOpening bitbucket...${nc}"
 	    firefox "https://bitbucket.org/dncp4312/hta_be/branches/?status=all"	
 	}
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
@@ -59,7 +61,7 @@
     bindkey -s '^p' 'vif ^M'
     bindkey -s '^g' 'fcd ^M'
     bindkey -s '^w' 'sysres iwd ^M'
-    bindkey -s '^[p' 'ping -c3 1.1.1.1 ^M'
+    bindkey -s '^[p' 'ping -c8 1.1.1.1 ^M'
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                                                              sources                                                                              ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
@@ -74,4 +76,3 @@
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
     terminaltheme.sh xeha 
     eval "$(rbenv init -)"
-    # cd ~/Projects/hta_be/

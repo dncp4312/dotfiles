@@ -13,6 +13,7 @@ alias -s rb=vim
 alias ph='cd ~/.local/share/pry'
 
 alias cfg='cd ~/.config'
+alias -s conf=vim
 #Aliases
 
 alias x=exit
@@ -74,6 +75,8 @@ alias lsrc='lsrc -v'
 
 alias gs='c ; git status'
 alias gl='c ; git log --oneline'
+alias ga='git add'
+alias gap='git add -p'
 alias gc='git commit -m'
 # alias gc='git checkout'
 alias gr='git reset HEAD --hard'
