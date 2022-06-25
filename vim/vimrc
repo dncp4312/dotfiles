@@ -4,7 +4,7 @@ set runtimepath+=$XDG_CONFIG_HOME/vim/after
 set runtimepath+=$XDG_CONFIG_HOME/vim
 
 syntax on
-set nocompatible
+" set nocompatible #Unneded
 set shiftwidth=4
 set number
 set relativenumber
@@ -19,6 +19,7 @@ set splitright
 set splitbelow
 set path+=**
 set termwinsize=10x0
+set backspace=indent,eol,start
 " set cursorline
 " set cursorlineopt=number
 " set list listchars=tab:>,trail:<,nbsp:.
@@ -47,6 +48,8 @@ map <silent> <C-H> :noh<CR>
 map <C-P> :FZF<CR>
 map <Leader>= gg=G``
 
+cnoremap w!! execute 'silent! write !sudo tee > /dev/null %' <bar> edit!
+
 nmap <F2> <Plug>(coc-rename)
 nmap <Leader>ff g_zf%
 nmap <Leader>/ gcc
@@ -64,6 +67,8 @@ noremap <Right> <Nop>
 " noremap <ESC> <Nop>
 nnoremap <silent> <Leader>l :vsplit<CR>
 nnoremap <silent> <Leader>j :split<CR>
+nnoremap <silent> <Leader>g :highlight! Comment ctermfg=7<CR>
+nnoremap <silent> <Leader>h :highlight! Comment ctermfg=16<CR>
 " nnoremap <C-j> <C-w>j
 " nnoremap <C-h> <C-w>h
 " nnoremap <C-k> <C-w>k
@@ -98,7 +103,8 @@ highlight VertSplit ctermfg=darkmagenta ctermbg=darkmagenta
 highlight Visual ctermbg=darkmagenta ctermfg=white
 highlight Folded ctermbg=none ctermfg=magenta cterm=italic,bold
 
-highlight Comment ctermfg=darkgrey cterm=italic,bold
+" highlight Comment ctermfg=darkgrey cterm=italic,bold
+highlight Comment ctermfg=darkgrey cterm=italic
 highlight Constant ctermfg=darkyellow
 highlight Special ctermfg=green
 highlight SpecialChar ctermfg=red
@@ -113,10 +119,12 @@ highlight Boolean ctermfg=red
 highlight Number ctermfg=red
 
 " highlight Folded
-" highlight DiffAdd 
-" highlight DiffChange
-" highlight DiffDelete
-" highlight DiffText
+highlight DiffAdd ctermbg=none ctermfg=green
+highlight DiffChange ctermbg=none
+highlight DiffDelete ctermbg=none ctermfg=red
+highlight DiffText ctermbg=darkmagenta ctermfg=white
+
+highlight SignColumn ctermbg=none
 
 highlight Pmenu ctermbg=darkmagenta ctermfg=white
 highlight PmenuSel ctermbg=blue ctermfg=yellow
