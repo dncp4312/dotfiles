@@ -1,5 +1,5 @@
 window:
-  opacity: 0.80
+  opacity: 0.85
 
   dimensions:
     columns: 110
@@ -65,13 +65,21 @@ window:
 font:
 
   normal:
-    family: SourceCodePro
+    family: CaskaydiaCoveNerdFontMono
     style: Bold
     
   bold:
-    family: SourceCodePro
+    family: CaskaydiaCoveNerdFontMono
     style: Bold
 
+  # normal:
+  #   family: SourceCodePro
+  #   style: Bold
+  #   
+  # bold:
+  #   family: SourceCodePro
+  #   style: Bold
+  #
   #italic:
     #family: SourceCodePro
     #style: Italic
@@ -80,11 +88,11 @@ font:
     #family: monospace
     #style: Bold Italic
 
-  size: 10.0
+  size: 7.0
 
   offset:
-    x: -1
-    #y: 0
+    x: 0
+    y: 1
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
@@ -339,7 +347,7 @@ mouse:
     #   - (Linux/BSD) xdg-open
     #   - (Windows) explorer
     #   launcher:
-    #    program: xdg-open
+       # program: xdg-open
     #  args: []
 
     # URL modifiers
