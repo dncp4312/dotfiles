@@ -2,7 +2,6 @@
 # ┃                                        applications                                         ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
 
-
 # super + e
 #     [[ $(pgrep polybar) ]] && sh -c "polybar-msg cmd quit && bspc config -m focused bottom_padding $((`bspc config -m focused bottom_padding` - 28 ))" || notify-send 'hey'
     # ~/.config/polybar.launch
@@ -15,39 +14,34 @@ super + Return
 	alacritty
 
 super + d
-	[[ $(pgrep Discord) ]] && bspc node $(bspc query -N -n .floating | xargs -i sh -c 'bspc query --node \{\} -T | grep -q discord && echo \{\}') --flag hidden || discord
+	[[ $(pgrep Discord) ]]                             \
+	&& bspc node $(bspc query -N -n .floating          \
+	    | xargs -i sh -c 'bspc query --node \{\} -T    \
+	    | grep -q discord && echo \{\}') --flag hidden \
+	|| discord
 
 super + shift + d
 	pkill Discord
 
 super + f
-	[[ $(pgrep firefox) ]] && bspc desktop -f firefox || firefox
+	[[ $(pgrep firefox) ]]                           \
+	&& bspc node $(bspc query -N -n .window          \
+	    | xargs -i sh -c 'bspc query --node \{\} -T  \
+	    | grep -q firefox && echo \{\}') -f          \
+	|| firefox
 
 super + p
 	~/.config/polybar/launch.sh
 
 super + w
 	[[ $(pgrep write_stylus) ]]                     \
-	&& bspc node -f $(bspc query -N -n .tiled       \
+	&& bspc node -f $(bspc query -N -n .window      \
 	    | xargs -i sh -c 'bspc query --node \{\} -T \
 	    | grep -q Write && echo \{\}')              \
 	|| write_stylus
 
 super + x
 	firefox ~/Projects/hta_be/dev/coverage/index.html
-
-
-# super + c
-# 	vscodium
-
-# super + e
-	# dolphin
-
-# super + r
-    # ~/.config/rofi/powermenu/powermenu.sh
-
-# super + v
-	# vlc
 
 # super + w
 	# vboxmanage startvm 'Win10_Test'
@@ -74,9 +68,9 @@ XF86AudioMute
 	pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 XF86AudioMicMute
-	pactl set-source-mute @DEFAULT_SOURCE@ toggle && \
-	[[ $(pactl get-source-mute @DEFAULT_SOURCE@ | grep yes) ]] && \
-	echo 1 > ~/mic_led || echo 0 > mic_led
+	pactl set-source-mute @DEFAULT_SOURCE@ toggle                    \
+	&& [[ $(pactl get-source-mute @DEFAULT_SOURCE@ | grep yes) ]]    \
+	&& echo 1 > ~/Arch/Envy/mic_led || echo 0 > ~/Arch/Envy/mic_led
 
 super + {Left, Right, Up, Down}
 	rotate_screen.sh {left, right, normal, inverted}
@@ -102,10 +96,12 @@ alt + Print
 	import /home/xevil/Projects/hta_be/dev/shots/capture_$(date +%F_%H%M%S).png
 
 alt + F12
-	feh --recursive --bg-fill --randomize ~/Wallpapers --no-fehbg
-
-ctrl + alt + p
-	feh --recursive --bg-fill --randomize ~/Wallpapers/Unset --no-fehbg
+	find ~/Wallpapers/ -mindepth 1 -type d | rg -v Live \
+	| awk -F/ '\{print $NF\}' | sort | cat              \
+	| rofi -dmenu -no-show-icons -l 2 -i -p Wallpapers  \
+	| xargs find ~/Wallpapers -type d -name             \
+	| xargs feh --bg-fill --randomize --no-fehbg        \
+	|| notify-send 'No wallpapers in this directory.'
 
 super + {minus, equal}
 	picom-trans -c {-,+}5
@@ -131,9 +127,11 @@ super + {minus, equal}
 alt + @b
 	rofi_bluetooth.sh
 
+# alt + f
+# 	rofi -show filebrowser -theme ~/.config/rofi/file.rasi
+
 alt + @space
 	rofi -show drun 
-	# rofi -show run -modi drun -theme ~/.config/rofi/xevcus.rasi
 	 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -251,13 +249,22 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+super + r : {h,j,k,l}
+	bspc node -z {                                 \
+	left   -20   0 || bspc node -z right  -20   0, \
+        bottom   0  20 || bspc node -z top      0  20, \
+        top      0 -20 || bspc node -z bottom   0 -20, \
+        right   20   0 || bspc node -z left    20   0  }
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+super + shift + r : {h,j,k,l}
+	bspc node -z {                                  \
+	right  -20   0 || bspc node -z left    -20   0, \
+        top      0  20 || bspc node -z bottom    0  20, \
+        bottom   0 -20 || bspc node -z top       0 -20, \
+        left    20   0 || bspc node -z right    20   0  }
 
 # move a floating window
-super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+# super + {Left,Down,Up,Right}
+# super + shift + {h,j,k,l}
+	# bspc node -v {-20 0,0 20,0 -20,20 0}
