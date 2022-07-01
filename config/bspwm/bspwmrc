@@ -1,75 +1,97 @@
 #!/bin/sh
 
-# export bliss=$(grep -w $(awk -F/ '{print $NF}' ~/.config/live | awk -F- '{print $1}') ~/.config/live_colors | cut -d ' ' -f2)
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Environment
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 export bliss=#8a2be2
 
-#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x0 --rotate normal
-#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x90 --rotate normal
-#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x180 --rotate normal
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Startup
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 
-picom &
 xsetroot -cursor_name left_ptr &
+pgrep -x picom > /dev/null || picom &
 pgrep -x sxhkd > /dev/null || sxhkd &
-
-feh --bg-fill --randomize /home/xevil/Wallpapers --no-fehbg &
-
+feh --bg-fill /home/xevil/Wallpapers/wallhaven-4oqrx550.jpg --no-fehbg &
 sh ~/.config/polybar/launch.sh &
 sh -c 'sleep 2 && polybar-msg cmd restart' &
 
-#exec xautolock -time 5 -locker i3lock.sh &
-
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Monitor
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 bspc monitor eDP-1 -d 1 2 3 4 5 6 firefox 8
 # bspc monitor HDMI-3 -d 1 2 3 4 5 
-#bspc monitor HDMI-3 -d 1 2 3 4 5 6 7 8
+# bspc monitor HDMI-3 -d 1 2 3 4 5 6 7 8
 # bspc monitor DP-2 -d firefox empty empty empty empty
 # bspc monitor DP-2 -d "  " "  " "" "" " ﭮ "
 
-bspc config window_gap            4
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Desktops
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+bspc desktop firefox -l monocle
+
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Gaps & Borders
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+bspc config window_gap            6
 bspc config border_width          4
 # bspc config top_padding          -4
 # bspc config right_padding        -4
 # bspc config left_padding         -4
 # bspc config bottom_padding       35
 
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Colors
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 bspc config active_border_color    "#000000"
 bspc config normal_border_color    "#000000"
 bspc config focused_border_color   $bliss
 bspc config presel_feedback_color  $bliss
-# bspc config focused_border_color   "#8a2be2"
-# bspc config presel_feedback_color  "#8a2be2"
 
-bspc desktop firefox -l monocle
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Settings
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+bspc config borderless_monocle true
+bspc config automatic_scheme alternate
+# bspc config focus_follows_pointer true
 
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Rules
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 bspc rule -a firefox desktop='firefox' follow=on
 bspc rule -a discord sticky=on state=floating center=on rectangle=1000x800+0+0
-bspc rule -a Gpick   state=floating center=on
-# bspc rule -a qbittorrent desktop='^10'
 
-###################################################################################################################################
-##                                                                                                                               ##
-##  wal -i $waloc                                                                                                                ##
-##  setleds -D +num                                                                                                              ##
-##                                                                                                                               ##
-##  for side in top right bottom left ; do                                                                                       ##
-##     bspc config ${side}_padding $BW                                                                                           ##
-##  done                                                                                                                         ##
-##                                                                                                                               ##
-##  --old                                                                                                                        ##
-##  xwinwrap -g 1920x1080 -ov -- mpv -wid WID --loop --no-audio ~/Videos/Itachi\ Uchiha\ Birds\ 4K-5p1SmbHPElo.webm              ##
-##  --options                                                                                                                    ##
-##  --no-osc --no-osd-bar --loop-file --player-operation-mode=cplayer --panscan=1.0 --no-input-default-bindings                  ##
-##                                                                                                                               ##
-##  bspc config split_ratio          0.5                                                                                         ##
-##  bspc config borderless_monocle   true                                                                                        ##
-##  bspc config gapless_monocle      true                                                                                        ##
-##                                                                                                                               ##
-## [[ $(pgrep xwinwrap) ]] && killall xwinwrap                                                                                   ##
-## xwinwrap -b -ni -g 1920x1080+0+0 -ov -- mpv -wid WID $(awk -F: 'NR==1 {print $1}' $XDG_CONFIG_HOME/live) --loop --no-audio &  ##
-##                                                                                                                               ##
-###################################################################################################################################
-
-#Envy Configs
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Envy
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 libinput-gestures-setup start
 xinput set-prop 'SYNA32A0:00 06CB:CE14 Touchpad' 'libinput Tapping Enabled' 1
 # pactl set-source-volume alsa_input.pci-0000_04_00.6.HiFi__hw_acp__source 200%
-# amixer set Capture 65535,65536
+
+
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+#  wal -i $waloc                                                                                                                #
+#  setleds -D +num                                                                                                              #
+#                                                                                                                               #
+#  for side in top right bottom left ; do                                                                                       #
+#     bspc config ${side}_padding $BW                                                                                           #
+#  done                                                                                                                         #
+#                                                                                                                               #
+#  --old                                                                                                                        #
+#  xwinwrap -g 1920x1080 -ov -- mpv -wid WID --loop --no-audio ~/Videos/Itachi\ Uchiha\ Birds\ 4K-5p1SmbHPElo.webm              #
+#  --options                                                                                                                    #
+#  --no-osc --no-osd-bar --loop-file --player-operation-mode=cplayer --panscan=1.0 --no-input-default-bindings                  #
+#                                                                                                                               #
+#                                                                                                                               #
+# [[ $(pgrep xwinwrap) ]] && killall xwinwrap                                                                                   #
+# xwinwrap -b -ni -g 1920x1080+0+0 -ov -- mpv -wid WID $(awk -F: 'NR==1 {print $1}' $XDG_CONFIG_HOME/live) --loop --no-audio &  #
+#                                                                                                                               #
+# export bliss=$(grep -w $(awk -F/ '{print $NF}' ~/.config/live | awk -F- '{print $1}') ~/.config/live_colors | cut -d ' ' -f2) #
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+
+
+#exec xautolock -time 5 -locker i3lock.sh &
+#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x0 --rotate normal
+#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x90 --rotate normal
+#xrandr --output DP-1 --off --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1600x900 --pos 1920x180 --rotate normal
+
