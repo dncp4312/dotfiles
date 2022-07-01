@@ -154,6 +154,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
 Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-surround'
+Plug 'godlygeek/tabular'
 Plug 'tomtom/tcomment_vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'thoughtbot/vim-rspec'
