@@ -38,6 +38,8 @@ alias eb="vim ~/.config/bspwm/bspwmrc"
 alias ec="vim ~/.config/picom/picom.conf"
 alias er="vim ~/.config/polybar/config.ini"
 alias ev="vim ~/.vim/vimrc"
+alias eg='vim ~/.config/libinput-gestures.conf'
+alias ef='vim ~/.config/rofi/xeha.rasi'
 
 alias pQ='pacman -Q'
 alias pT='pactree -d 1'
@@ -112,3 +114,4 @@ alias discord="LIBVA_DRIVER_NAME=i915 discord --ignore-gpu-blocklist --disable-f
 alias fzf="fzf --height=80% --layout=reverse-list --border=horizontal --no-info --preview='bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
 alias ncdu='ncdu --color dark'
 alias btop='btop --utf-force'
+alias nf='c; neofetch'
