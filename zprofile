@@ -24,6 +24,7 @@ export KDEHOME="$XDG_CONFIG_HOME"/kde
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 export HISTFILE=${XDG_DATA_HOME}/zsh/history
 export LESSHISTFILE=${XDG_CACHE_HOME}/less/history
+export LESSCHARSET=UTF-8
 export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
