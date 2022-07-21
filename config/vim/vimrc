@@ -1,10 +1,6 @@
-set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
-set runtimepath^=$XDG_CONFIG_HOME/vim
-set runtimepath+=$XDG_CONFIG_HOME/vim/after
-set runtimepath+=$XDG_CONFIG_HOME/vim
+source $XDG_CONFIG_HOME/vim/relocate_vim
 
 syntax on
-" set nocompatible #Unneded
 set shiftwidth=4
 set number
 set relativenumber
@@ -25,6 +21,8 @@ set backspace=indent,eol,start
 " set list listchars=tab:>,trail:<,nbsp:.
 " filetype on
 filetype plugin on
+" set ttymouse=sgr
+" set mouse=a
 " filetype indent on
 
 "###### Lets ########
@@ -147,7 +145,7 @@ highlight MatchParen ctermbg=darkmagenta ctermfg=white
 
 
 "###### Plugins ###################################################
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -200,8 +198,8 @@ nmap <Leader>n :call RunNearestSpec()<CR>
 let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets', 
 	    \'coc-solargraph', 'coc-pairs',
 	    \'coc-json']
-" source $XDG_CONFIG_HOME/vim/plug-config/coc.vim
-source $HOME/.vim/plug-config/coc.vim
+source $XDG_CONFIG_HOME/vim/plug-config/coc.vim
+" source $HOME/.vim/plug-config/coc.vim
 "###### CoC #################################################################
 
 "###### VimWiki ##########################
