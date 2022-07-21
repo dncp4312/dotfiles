@@ -15,6 +15,7 @@
     vif         () { file=$(fzf) && vim "$file" }
     run         () { nohup $1 $2 > /dev/null & disown }
     brighten    () { echo $1 > /sys/class/backlight/amdgpu_bl0/brightness }
+    depends     () { awk '/Required/{for (i=4;i<NF+1;++i) print $i}' <(pQ -i $1) }
     colormap    () { for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done }
     show_colour () { perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m \e[49m "};print "\n"' "$@" }
     installed   () { awk '/%NAME%/{getline;PKG=$1} /%INSTALLDATE%/{getline;IDATE=strftime("%Y-%m-%d %H:%M",$1);print IDATE" "PKG}' /var/lib/pacman/local/*/desc|sort }
@@ -25,17 +26,16 @@
     fdiff       () { diff -u $1 $2 | diff-so-fancy }
     setlive     () { echo $(readlink -f $1) > $XDG_CONFIG_HOME/live ; bspc wm -r }
 
+    syncup () { rsync -a ~/Projects/hta_be home:Projects/ --delete }
+    syncdn () { rsync -a home:Projects/hta_be ~/Projects/ --delete }
+
     rv() { selection=$(rg $1 --vimgrep | fzf)
 	   line=$(echo $selection| cut -d: -f2)
 	   file=$(echo $selection| cut -d: -f1)
 	   vim +$line $file
 	 }
 
-    list() {
-	emulate -L zsh
-	clear
-	exa --group-directories-first
-    }
+    list() { emulate -L zsh ; clear ; exa --group-directories-first }
 
     update_master () {
 	    current=$(git branch --show-current)
@@ -82,4 +82,13 @@
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
     terminaltheme.sh xeha 
     eval "$(rbenv init -)"
+    # cd ~/Projects/hta_be/dev/PDFSpawner_Specs
+    # cd ~/Projects/hta_be/dev/db_seed
+    # cd ~/Projects/hta_be
+    # cd ~/.dotfiles
+    alias ew=' vim ~/.local/bin/styli.sh'
+    alias sc=' cd ~/.cache/styli.sh'
+
     chpwd_functions=(${chpwd_functions[@]} "list")
+    alias sl=setlive
+

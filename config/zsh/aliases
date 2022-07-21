@@ -14,10 +14,11 @@ alias ph='cd ~/.local/share/pry'
 
 alias cfg='cd ~/.config'
 alias -s conf=vim
-#Aliases
 
+#Aliases
 alias x=exit
 alias c=clear
+alias cls='c;ls'
 alias v=vim
 alias su='sudo -i'
 
@@ -37,7 +38,7 @@ alias es="vim ~/.config/sxhkd/sxhkdrc"
 alias eb="vim ~/.config/bspwm/bspwmrc"
 alias ec="vim ~/.config/picom/picom.conf"
 alias er="vim ~/.config/polybar/config.ini"
-alias ev="vim ~/.vim/vimrc"
+alias ev="vim ~/.config/vim/vimrc"
 alias eg='vim ~/.config/libinput-gestures.conf'
 alias ef='vim ~/.config/rofi/xeha.rasi'
 

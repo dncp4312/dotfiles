@@ -38,5 +38,4 @@ export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph
 export TIMEWARRIORDB="$XDG_CONFIG_HOME"/timewarrior
 
 [[ -f ~/.zshrc ]] && . ~/.zshrc
-# [[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx "$XINITRC" -- vt1 &> /dev/null
-[[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx /usr/bin/bspwm -- vt1 &> /dev/null
+[[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx "$XINITRC" -- vt1 &> /dev/null
