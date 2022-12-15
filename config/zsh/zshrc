@@ -19,6 +19,7 @@
     colormap    () { for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done }
     show_colour () { perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m \e[49m "};print "\n"' "$@" }
     installed   () { awk '/%NAME%/{getline;PKG=$1} /%INSTALLDATE%/{getline;IDATE=strftime("%Y-%m-%d %H:%M",$1);print IDATE" "PKG}' /var/lib/pacman/local/*/desc|sort }
+    xget        () { cp $(which $1) $HOME/.local/xbin/ }
     fcd         () { dir=$(find -type d | fzf) || return ; 
 		     clear ; echo "\033[0;30mCurrent Directory :\033[0m"   
 		     cd "$dir" ; exa --group-directories-first --color=always }
@@ -26,8 +27,8 @@
     fdiff       () { diff -u $1 $2 | diff-so-fancy }
     setlive     () { echo $(readlink -f $1) > $XDG_CONFIG_HOME/live ; bspc wm -r }
 
-    syncup () { rsync -a ~/Projects/hta_be home:Projects/ --delete }
-    syncdn () { rsync -a home:Projects/hta_be ~/Projects/ --delete }
+    syncup () { rsync -av ~/Projects/hta_be home:Projects/ --delete }
+    syncdn () { rsync -av home:Projects/hta_be ~/Projects/ --delete }
 
     rv() { selection=$(rg $1 --vimgrep | fzf)
 	   line=$(echo $selection| cut -d: -f2)
@@ -84,11 +85,10 @@
     eval "$(rbenv init -)"
     # cd ~/Projects/hta_be/dev/PDFSpawner_Specs
     # cd ~/Projects/hta_be/dev/db_seed
-    # cd ~/Projects/hta_be
+    cd ~/Projects/hta_be
     # cd ~/.dotfiles
     alias ew=' vim ~/.local/bin/styli.sh'
     alias sc=' cd ~/.cache/styli.sh'
 
     chpwd_functions=(${chpwd_functions[@]} "list")
     alias sl=setlive
-
