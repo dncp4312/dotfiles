@@ -2,13 +2,14 @@
 # ┃                                        applications                                         ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
 
-# super + e
-#     [[ $(pgrep polybar) ]] && sh -c "polybar-msg cmd quit && bspc config -m focused bottom_padding $((`bspc config -m focused bottom_padding` - 28 ))" || notify-send 'hey'
-    # ~/.config/polybar.launch
-    # [[ $(polybar-msg cmd hide) ]] && bspc config -m focused bottom_padding $((`bspc config -m focused bottom_padding` - 28 )) || polybar-msg cmd show
+super + i
+	immerse.sh
 
-# super + shift + e
-#     polybar-msg cmd show #; bspc config -m focused bottom_padding $((`bspc config -m focused bottom_padding` + 28 ))
+super + o
+	onboard
+
+super + v
+	alacritty -e vim
 
 super + Return
 	alacritty
@@ -54,18 +55,23 @@ super + x
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
 
 super + b
-	[[ $(bluetoothctl info | grep 'Device' | wc -c) -eq 0 ]]            \
-	&& bluetoothctl power on && bluetoothctl connect 8C:64:A2:61:CB:FC  \
-	|| bluetoothctl power off
+	[[ $(bluetoothctl info | grep 'Device') ]]                           \
+	&& bluetoothctl power off                                            \
+	|| bluetoothctl power on && bluetoothctl connect 8C:64:A2:61:CB:FC
 
 XF86MonBrightness{Up,Down}
-	{backlight_brighten.sh, backlight_dim.sh}
+	backlight_{brighten,dim}.sh
 
 XF86Audio{Raise,Lower}Volume
+	[[ $(pactl get-sink-mute @DEFAULT_SINK@ | grep yes) ]]    \
+	&& pactl set-sink-mute @DEFAULT_SINK@ toggle ;            \
 	pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
 
 XF86AudioMute
 	pactl set-sink-mute @DEFAULT_SINK@ toggle
+	
+XF86Audio{Prev,Play,Next}
+	playerctl {previous, play-pause, next}
 
 XF86AudioMicMute
 	pactl set-source-mute @DEFAULT_SOURCE@ toggle                    \
@@ -73,11 +79,7 @@ XF86AudioMicMute
 	&& echo 1 > ~/Arch/Envy/mic_led || echo 0 > ~/Arch/Envy/mic_led
 
 super + {Left, Right, Up, Down}
-	rotate_screen.sh {left, right, normal, inverted}
-
-# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
-# ┃                                         experiments                                         ┃ #
-# ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
+	rotate_screen.sh {right, left, inverted, normal}
 
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                           system                                            ┃ #
@@ -100,7 +102,7 @@ alt + F12
 	| awk -F/ '\{print $NF\}' | sort | cat              \
 	| rofi -dmenu -no-show-icons -l 2 -i -p Wallpapers  \
 	| xargs find ~/Wallpapers -type d -name             \
-	| xargs feh --bg-fill --randomize --no-fehbg        \
+	| xargs feh --bg-fill --randomize                   \
 	|| notify-send 'No wallpapers in this directory.'
 
 super + {minus, equal}
@@ -131,7 +133,7 @@ alt + @b
 # 	rofi -show filebrowser -theme ~/.config/rofi/file.rasi
 
 alt + @space
-	rofi -show drun 
+	rofi -show drun
 	 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -141,15 +143,12 @@ super + Escape
 # bspwm hotkeys #
 #################
 
-# quit/restart bspwm
 super + alt + {q,r}
 	bspc {quit,wm -r}
 
-# close and kill
-# super + {_,shift + }w
-# 	bspc node -{c,k}
+super + {_,shift + }w
+	bspc node -{c,k}
 
-# alternate between the tiled and monocle layout
 super + m
 	bspc desktop -l next
 
@@ -166,8 +165,8 @@ super + y
 ###############
 
 # set the window state
-super + {t,shift + t,s,shift + f, h}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + {t,shift + t,s,shift + f}
+	bspc node -t \~{tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
 super + ctrl + {m,x,y,z}
@@ -268,3 +267,8 @@ super + shift + r : {h,j,k,l}
 # super + {Left,Down,Up,Right}
 # super + shift + {h,j,k,l}
 	# bspc node -v {-20 0,0 20,0 -20,20 0}
+
+alt + t
+	[[ $(xrandr --verbose | awk '/eDP-1/\{print $6\}') =~ normal\|inverted ]]                  \
+	&& feh --recursive --randomize --bg-fill --no-fehbg /home/xevil/Pictures/Wallpapers/Pics   \
+	|| feh --recursive --randomize --bg-fill --no-fehbg /home/xevil/Pictures/Wallpapers/Ports
