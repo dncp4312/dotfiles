@@ -3,6 +3,7 @@
 
 [interactive]
 	diffFilter = diff-so-fancy --patch
+
 [user]
 	name = dncp4312
 	email = 24888745+dncp4312@users.noreply.github.com
@@ -12,6 +13,7 @@
 	blog = log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	glo = log --graph --abbrev-commit --decorate  --first-parent --oneline
 	stash-staged = "!bash -c \"git stash --keep-index; git stash push -m \"staged\" --keep-index; git stash pop stash@{1}\""
+        hs = log --pretty='%C(yellow)%p %C(yellow bold)%h %C(magenta bold)%<|(12)%cN%C(auto)%d %Creset%s'
 
 [color]
 	ui = true
@@ -30,3 +32,18 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
+
+[add "interactive"]
+	useBuiltin = false
+
+[log]
+	mailmap = true
+
+[diff-so-fancy]
+	markEmptyLines = false
+
+# [push]
+# 	autoSetupRemote = true
+
+[merge]
+	tool = vimdiff
