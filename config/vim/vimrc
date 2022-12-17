@@ -16,6 +16,7 @@ set splitbelow
 set path+=**
 set termwinsize=10x0
 set backspace=indent,eol,start
+set pastetoggle=<Leader>v
 " set cursorline
 " set cursorlineopt=number
 " set list listchars=tab:>,trail:<,nbsp:.
@@ -30,27 +31,29 @@ let @c = "ggyG"
 let mapleader = " "
 "###### Lets ########
 
-
 "###### AutoCommands #############################
 " autocmd BufWritePre * normal gg=G``
 " autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 autocmd BufWinEnter,BufNewFile * setlocal formatoptions-=cro
 "###### AutoCommands #############################
 
-
 "###### Remaps #############################
 map <C-g> :term<CR>
 map <C-S-g> :bo term<CR>
 map <C-A> ggVG
-map <silent> <C-H> :noh<CR>
+" map <silent> <C-H> :noh<CR>
 map <C-P> :FZF<CR>
 map <Leader>= gg=G``
 
 cnoremap w!! execute 'silent! write !sudo tee > /dev/null %' <bar> edit!
 
+inoremap jj <ESC>
+
 nmap <F2> <Plug>(coc-rename)
 nmap <Leader>ff g_zf%
 nmap <Leader>/ gcc
+nnoremap <Leader>p "_dP
+
 nnoremap Y y$
 nnoremap <C-k> <C-w>
 " nnoremap <Leader>1 1gt
@@ -71,11 +74,18 @@ nnoremap <silent> <Leader>h :highlight! Comment ctermfg=16<CR>
 " nnoremap <C-h> <C-w>h
 " nnoremap <C-k> <C-w>k
 " nnoremap <C-l> <C-w>l
+noremap <silent> <Leader>x <cmd>!chmod +x %<CR>
 
 " inoremap jk <ESC>
 inoremap , ,<C-G>u
 inoremap . .<C-G>u
 " imap <Leader>j <Backspace>
+
+inoremap <Leader>v <C-r>+
+nnoremap <Leader>v <cmd>set paste<CR>"+p<cmd>set nopaste<CR>
+vnoremap <Leader>c "+y
+" nmap <Leader>Y "+Y
+" nnoremap <C-C> "+y
 "###### Remaps #############################
 
 
@@ -199,6 +209,7 @@ let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets',
 	    \'coc-solargraph', 'coc-pairs',
 	    \'coc-json']
 
+let g:coc_config_home = '$XDG_CONFIG_HOME/vim/plug-config'
 source $XDG_CONFIG_HOME/vim/plug-config/coc.vim
 
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -207,7 +218,7 @@ inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\
 " remap for complete to use tab and <cr>
 inoremap <silent><expr> <TAB>
     \ coc#pum#visible() ? coc#pum#next(1):
-    \ <SID>check_back_space() ? "\<Tab>" :
+    \ CheckBackspace() ? "\<Tab>" :
     \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -215,11 +226,11 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " hi CocSearch ctermfg=12 guifg=#18A3FF
 " hi CocMenuSel ctermbg=109 guibg=#13354A
 
-" function! CheckBackSpace() abort
-" let col = col('.') - 1
-" return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
-"
+function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 " " Insert <tab> when previous text is space, refresh completion if not.
 " inoremap <silent><expr> <TAB>
 "     \ coc#pum#visible() ? coc#pum#next(1):
