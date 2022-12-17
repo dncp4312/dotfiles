@@ -13,16 +13,9 @@ if ! [[ -f /tmp/immersed ]]; then
     bspc config bottom_padding -$border
     bspc query -D --names | xargs -I {} bspc desktop {} -l monocle
 else
-    bspc wm -r
     rm /tmp/immersed
+    bspc wm -r
+    picom &
     bspc query -D --names | xargs -I {} bspc desktop {} -l tiled
     bspc desktop firefox -l monocle
 fi
-    # border=4
-    # launch_picom &
-    # bspc config window_gap 6
-    # bscp config border_width 4
-    # bspc config right_padding 0
-    # bspc config left_padding 0
-    # bspc config top_padding 0
-    # launch_polybar &

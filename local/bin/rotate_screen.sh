@@ -28,8 +28,7 @@ case "$1" in
 esac
 
 xrandr --output eDP-1 --rotate $1
-restore_fehbg &
-launch_polybar &
+bspc wm -r
 
 for dev in "${DEVICES[@]}"; do
     xinput set-prop "${dev}" 'Coordinate Transformation Matrix' "${mat[@]}"
