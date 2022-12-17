@@ -1,5 +1,8 @@
 source $XDG_CONFIG_HOME/vim/relocate_vim
 
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+"   Settings
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
 syntax on
 set shiftwidth=4
 set number
@@ -14,41 +17,87 @@ set shell=/bin/zsh
 set splitright
 set splitbelow
 set path+=**
-set termwinsize=10x0
+" set termwinsize=10x0
+" set termguicolors
+" set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set backspace=indent,eol,start
 set pastetoggle=<Leader>v
+set clipboard=unnamedplus
 " set cursorline
 " set cursorlineopt=number
 " set list listchars=tab:>,trail:<,nbsp:.
-" filetype on
-filetype plugin on
 " set ttymouse=sgr
 " set mouse=a
+" filetype on
 " filetype indent on
+filetype plugin on
 
-"###### Lets ########
-let @c = "ggyG"
+"  Underlines
+" ━━━━━━━━━━━━━━
+let &t_Ce = "\e[4:0m"                  " undercurl/Underline end
+let &t_Us = "\e[4:2m"                  " underdouble
+let &t_Cs = "\e[4:3m"                  " undercurl
+let &t_ds = "\e[4:4m"                  " underdotted
+let &t_Ds = "\e[4:5m"                  " underdashed
+let &t_Te = "s"                        " Strikethrough end
+let &t_Ts = "s"                        " Strikethrough
+let &t_AU = "\<Esc>[58;5;%dm""]"       " termguicolors is unset
+" let &t_8u = "\<Esc>[58;2;%lu;%lu;%lum" " termguicolors is set
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum" " only necessary to set the `guifg` foreground attribute
+" let &t_RV = "\<Esc>[>c"                " only necessary for terminals which are not detected as xterm compatible
+" https://groups.google.com/g/vim_dev/c/1AxIXaMfAu8
+
+"  Cursor
+" ━━━━━━━━━━━━━━
+" 0 > blinking block
+" 1 > blinking block (default)
+" 2 > steady block
+" 3 > blinking Underline
+" 4 > steady underline
+" 5 > blinking bar
+" 6 > steady bar
+
+let &t_SI = "\e[6 q" " insert-mode
+let &t_SR = "\e[2 q" " insert-mode
+let &t_EI = "\e[4 q" " normal
+
 let mapleader = " "
-"###### Lets ########
 
-"###### AutoCommands #############################
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+"   AutoCommands
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
 " autocmd BufWritePre * normal gg=G``
 " autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 autocmd BufWinEnter,BufNewFile * setlocal formatoptions-=cro
-"###### AutoCommands #############################
-
-"###### Remaps #############################
-map <C-g> :term<CR>
-map <C-S-g> :bo term<CR>
-map <C-A> ggVG
-" map <silent> <C-H> :noh<CR>
-map <C-P> :FZF<CR>
+if has('nvim')
+    autocmd VimLeave * set guicursor=a:hor90
+else
+    autocmd VimEnter * silent !echo "\e[4 q"
+    autocmd VimLeave * silent !echo "\e[4 q"
+end
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+"   Remaps
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+" map <C-g> :term<CR>
+" map <C-S-g> :bo term<CR>
+map <Leader>A ggVG
+map <silent> <C-H> :noh<CR>
+map <silent> <C-P> :FZF<CR>
 map <Leader>= gg=G``
 
+"  Command_Mode
+" ━━━━━━━━━━━━━━
 cnoremap w!! execute 'silent! write !sudo tee > /dev/null %' <bar> edit!
 
+"  Insert_Mode
+" ━━━━━━━━━━━━━━
 inoremap jj <ESC>
+inoremap , ,<C-G>u
+inoremap . .<C-G>u
+inoremap <C-v> <C-r>+
 
+"  Normal_Mode
+" ━━━━━━━━━━━━━━
 nmap <F2> <Plug>(coc-rename)
 nmap <Leader>ff g_zf%
 nmap <Leader>/ gcc
@@ -56,50 +105,50 @@ nnoremap <Leader>p "_dP
 
 nnoremap Y y$
 nnoremap <C-k> <C-w>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+nnoremap <silent> <Leader>l :vsplit<CR>
+nnoremap <silent> <Leader>j :split<CR>
+nnoremap <silent> <Leader>g :highlight! Comment ctermfg=7<CR>
+nnoremap <silent> <Leader>h :highlight! Comment ctermfg=16<CR>
+nnoremap <silent> <Leader>x <cmd>!chmod +x %<CR>
+nnoremap <silent> <Leader>gp gcip
+" noremap <ESC> <Nop>
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 " nnoremap <Leader>1 1gt
 " nnoremap <Leader>2 2gt
 " nnoremap <Leader>3 3gt
 " nnoremap <Leader>4 4gt
 " nnoremap <Leader>5 5gt
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-" noremap <ESC> <Nop>
-nnoremap <silent> <Leader>l :vsplit<CR>
-nnoremap <silent> <Leader>j :split<CR>
-nnoremap <silent> <Leader>g :highlight! Comment ctermfg=7<CR>
-nnoremap <silent> <Leader>h :highlight! Comment ctermfg=16<CR>
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
-noremap <silent> <Leader>x <cmd>!chmod +x %<CR>
 
-" inoremap jk <ESC>
-inoremap , ,<C-G>u
-inoremap . .<C-G>u
-" imap <Leader>j <Backspace>
 
-inoremap <Leader>v <C-r>+
-nnoremap <Leader>v <cmd>set paste<CR>"+p<cmd>set nopaste<CR>
-vnoremap <Leader>c "+y
+"  Clipboard
+" ━━━━━━━━━━━━━━
+" nnoremap <Leader>v <cmd>set paste<CR>"+p<cmd>set nopaste<CR>
+" vnoremap <Leader>c "+y
 " nmap <Leader>Y "+Y
 " nnoremap <C-C> "+y
-"###### Remaps #############################
 
-
-"###### Moving Lines ###################
+"  Moving_Lines
+" ━━━━━━━━━━━━━━
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '>-2<CR>gv=gv
 inoremap <C-j> <esc>:m .+1<CR>==
 inoremap <C-k> <esc>:m .-2<CR>==
 " nnoremap <leader>j <esc>:m .+1<CR>==
 " nnoremap <leader>k <esc>:m .-2<CR>==
-"###### Moving Lines ###################
 
 
-"###### Highlighting ###########################
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+"   Remaps
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+" highlight Cursor ctermbg=blue
+
 highlight IncSearch ctermbg=darkmagenta ctermfg=white
 highlight Search ctermbg=darkmagenta ctermfg=white
 
@@ -109,7 +158,7 @@ highlight LineNrBelow ctermfg=cyan
 
 highlight VertSplit ctermfg=darkmagenta ctermbg=darkmagenta
 highlight Visual ctermbg=darkmagenta ctermfg=white
-highlight Folded ctermbg=none ctermfg=magenta cterm=italic,bold
+highlight Folded ctermbg=none ctermfg=magenta cterm=italic
 
 " highlight Comment ctermfg=darkgrey cterm=italic,bold
 highlight Comment ctermfg=darkgrey cterm=italic
@@ -122,9 +171,9 @@ highlight PreProc ctermfg=magenta
 highlight Type ctermfg=yellow
 highlight Underline ctermfg=red cterm=reverse
 highlight Ignore ctermfg=red cterm=reverse
-highlight String ctermfg=green
-highlight Boolean ctermfg=red
-highlight Number ctermfg=red
+highlight String ctermfg=darkgreen
+highlight Boolean ctermfg=blue
+highlight Number ctermfg=blue
 
 " highlight Folded
 highlight DiffAdd ctermbg=none ctermfg=green
@@ -134,13 +183,56 @@ highlight DiffText ctermbg=darkmagenta ctermfg=white
 
 highlight SignColumn ctermbg=none
 
-highlight Pmenu ctermbg=darkmagenta ctermfg=white
-highlight PmenuSel ctermbg=blue ctermfg=yellow
+highlight Pmenu ctermbg=16 ctermfg=blue
+highlight PmenuSel ctermbg=blue ctermfg=16
+highlight PmenuSBar ctermbg=16 ctermfg=16
+highlight PmenuThumb ctermbg=blue ctermfg=blue
 
 highlight MatchParen ctermbg=darkmagenta ctermfg=white
-"###### Highlighting ###########################
-"
-"###### Highlighting ###########################
+
+highlight Conceal ctermbg=16 ctermfg=16
+
+"  Ruby
+" ━━━━━━━━━━━━━━
+highlight rubyInterpolationDelimiter ctermfg=white
+highlight rubyTestMacro ctermfg=darkmagenta
+" highlight rubyString ctermfg=darkgreen
+
+"  CoC
+" ━━━━━━━━━━━━━━
+highlight CocNotificationError ctermbg=black ctermfg=16
+highlight CocHighlightText ctermfg=yellow
+
+" highlight CocErrorSign ctermbg=red ctermfg=white
+" highlight CocErrorVirtualText ctermbg=red ctermfg=white
+highlight CocErrorHighlight cterm=undercurl guisp=red
+if !has('nvim')
+    highlight CocErrorHighlight ctermul=red
+endif
+" highlight CocErrorLine ctermbg=red ctermfg=white 
+
+" highlight CocWarningSign ctermbg=red ctermfg=white
+" highlight CocWarningVirtualText ctermbg=red ctermfg=white
+" highlight CocWarningHighlight ctermbg=red ctermfg=white
+" highlight CocWarningLine ctermbg=red ctermfg=white
+
+" highlight CocHintSign ctermbg=red ctermfg=white
+" highlight CocHintVirtualText ctermbg=red ctermfg=white
+" highlight CocHintHighlight ctermbg=red ctermfg=white
+" highlight CocHintLine ctermbg=red ctermfg=white
+
+" highlight CocInfoSign ctermbg=red ctermfg=white
+" highlight CocInfoVirtualText ctermbg=red ctermfg=white
+" highlight CocInfoHighlight ctermbg=red ctermfg=white
+" highlight CocInfoLine ctermbg=red ctermfg=white
+
+" highlight CocFadeOut ctermbg=red ctermfg=white
+" highlight CocDeprecatedHighlight ctermbg=red ctermfg=white
+" highlight CocStrikeThrough ctermbg=red ctermfg=white
+" highlight CocUnusedHighlight ctermbg=red ctermfg=white
+
+"  Unused
+" ━━━━━━━━━━━━━━
 " highlight LineNr ctermfg=4 
 " highlight Comment ctermfg=8 cterm=italic,bold
 " highlight Search ctermbg=5 ctermfg=7
@@ -151,60 +243,86 @@ highlight MatchParen ctermbg=darkmagenta ctermfg=white
 " highlight CursorLine term=bold ctermbg=8
 " highlight CursorLineNr ctermbg=4 ctermfg=7
 " set list listchars=tab:>,trail:<,nbsp:.
-"###### Highlighting ###########################
 
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+nnoremap sg :call SynGroup()<CR>
 
-"###### Plugins ###################################################
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+nnoremap ss :call SynStack()<CR>
+
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+"   Plugins
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
 call plug#begin()
-Plug 'vimwiki/vimwiki'
-Plug 'tpope/vim-fugitive'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'itchyny/lightline.vim'
-Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-surround'
-Plug 'godlygeek/tabular'
-Plug 'tomtom/tcomment_vim'
-Plug 'psliwka/vim-smoothie'
-Plug 'thoughtbot/vim-rspec'
-" Plug 'ap/vim-css-color'
-" Plug 'ecomba/vim-ruby-refactoring' " Plug 'matchit.vim'
-" Plug 'tpope/vim-rails'
-" SnipMate
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'
-Plug 'jiangmiao/auto-pairs'
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'vimwiki/vimwiki'
+  Plug 'tpope/vim-fugitive'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'itchyny/lightline.vim'
+  Plug 'andymass/vim-matchup'
+  Plug 'tpope/vim-surround'
+  Plug 'godlygeek/tabular'
+  Plug 'tomtom/tcomment_vim'
+  Plug 'psliwka/vim-smoothie'
+  Plug 'thoughtbot/vim-rspec'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-abolish'
+   
+"  SnipMate
+" ━━━━━━━━━━━━━━
+  Plug 'MarcWeber/vim-addon-mw-utils'
+  Plug 'tomtom/tlib_vim'
+  Plug 'garbas/vim-snipmate'
+  Plug 'honza/vim-snippets'
+  Plug 'jiangmiao/auto-pairs'
+
+"  Unused
+" ━━━━━━━━━━━━━━
+"  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"  Plug 'rust-lang/rust.vim'
+"  Plug 'ap/vim-css-color'
+"  Plug 'ecomba/vim-ruby-refactoring'
+"  Plug 'matchit.vim'
+
 call plug#end()
-"###### Plugins ###################################################
 
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
+"   Plugins_Configurations
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
 
-"###### Lightline ####################################################################
+"  Lightline
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 set laststatus=2
 set noshowmode
 let g:lightline =   { 
 	    \   'colorscheme' : 'molokai',
 	    \   'active' 	    : {
-		\   	'left'      : [ [ 'mode', 'paste' ],
-		\  			[ 'readonly', 'absolutepath', 'modified' ] ],
-		\  	'right'     : [ [ 'lineinfo' ],
-		\  		        [ 'percent'  ],
-		\  		        [ 'filetype' ], ], },
-		\      'component' : {
-		    \         'hellow' : 'Hey XeviL !' },
-		    \   }
-"###### Lightline ####################################################################
+	    \   	'left'      : [ [ 'mode', 'paste' ],
+	    \  			[ 'readonly', 'absolutepath', 'modified' ] ],
+	    \  	'right'     : [ [ 'lineinfo' ],
+	    \  		        [ 'percent'  ],
+	    \  		        [ 'filetype' ], ], },
+	    \      'component' : {
+	    \         'hellow' : 'Hey XeviL !' },
+	    \   }
 
-
-"###### RSpec #####################################################
+"  RSpec
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 nmap <Leader>t :call RunCurrentSpecFile()<CR>
 nmap <Leader>a :call RunAllSpecs()<CR>
 nmap <Leader>n :call RunNearestSpec()<CR>
 " map <Leader>l :call RunLastSpec()<CR>
-"##################################################################
 
-"###### CoC #################################################################
+"  CoC
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets', 
 	    \'coc-solargraph', 'coc-pairs',
 	    \'coc-json']
@@ -215,7 +333,15 @@ source $XDG_CONFIG_HOME/vim/plug-config/coc.vim
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
 
-" remap for complete to use tab and <cr>
+" highlight CocSearch ctermfg=12 guifg=#18A3FF
+" highlight CocMenuSel ctermbg=109 guibg=#13354A
+
+function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>
     \ coc#pum#visible() ? coc#pum#next(1):
     \ CheckBackspace() ? "\<Tab>" :
@@ -223,28 +349,15 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" hi CocSearch ctermfg=12 guifg=#18A3FF
-" hi CocMenuSel ctermbg=109 guibg=#13354A
-
-function! CheckBackspace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" " Insert <tab> when previous text is space, refresh completion if not.
-" inoremap <silent><expr> <TAB>
-"     \ coc#pum#visible() ? coc#pum#next(1):
-"     \ CheckBackSpace() ? "\<Tab>" :
-"     \ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-" source $HOME/.vim/plug-config/coc.vim
-"###### CoC #################################################################
-
-"###### VimWiki ##########################
+"  VimWiki
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:vimwiki_list = [ { 'path' : '~/Documents/Vimwiki/' } ]
 "###### VimWiki ##########################
 
-"###### SnipMate ##########################
+"  SnipMate
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:snipMate = { 'snippet_version' : 1}
-"###### SnipMate ##########################
+
+"  Smoothie
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let g:smoothie_update_interval = 1
