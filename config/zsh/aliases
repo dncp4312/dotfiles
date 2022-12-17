@@ -118,7 +118,6 @@ alias br='bspc wm -r'
 alias restore_hta_db="mongorestore --nsFrom 'hta_be_production.*' --nsTo 'hta_be_dev.*' --drop $1"
 alias matrix="unimatrix -n -s 94 -l 'o' -f | lolcat"
 alias discord="LIBVA_DRIVER_NAME=i915 discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-feature=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
-alias fzf="fzf --height=80% --layout=reverse-list --border=horizontal --no-info --preview='bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
 alias ncdu='ncdu --color dark'
 alias btop='btop --utf-force'
 alias nf='c; neofetch'
