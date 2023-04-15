@@ -14,6 +14,8 @@ alias ph='cd ~/.local/share/pry'
 
 alias cfg='cd ~/.config'
 alias -s conf=vim
+alias -s yml=vim
+alias -s rb=vim
 
 #Aliases
 alias x=exit
@@ -80,14 +82,20 @@ alias lsrc='lsrc -v'
 alias gs='c ; git status'
 # alias gl='c ; git log --oneline'
 alias gl='c ; git hs'
+alias gld='c ; git hsd'
 alias ga='git add'
 alias gap='git add -p'
 alias gc='git commit -m'
 alias gco='git checkout'
+alias gcob='git checkout -b'
 alias gr='git reset HEAD --hard'
 alias grc'GIT_EDITOR=true git reset HEAD --hard'
+alias grp='git restore --patch .'
 alias gb='git branch'
+alias gba='git branch -a'
 alias gbc='git branch --show-current'
+alias gbd='git branch --delete'
+alias gbD='git branch --delete --force'
 alias gum='git reset HEAD~1 --hard'
 alias gt='git blot'
 alias gh='git glo'
@@ -97,16 +105,24 @@ alias gdn='git diff --name-only'
 alias gdl="gl --no-color | head -n1 | cut -d' ' -f1,2 | xargs git diff"
 alias gsm='git stash push -m'
 alias gsp='git stash pop'
-alias gsl='git stash list'
+alias gsl='c; git stash list'
 alias gsa='git stash apply --index'
 alias gca='git commit --amend --no-edit'
 alias gwa='git worktree add'
 alias gwr='git worktree remove'
+alias gpr='git branch -r --merged origin/dev | grep -Ev "(^\*|master|dev|staging)" | grep origin | cut -d"/" -f2 | xargs git push --delete origin'
 
 alias d='docker'
 alias di='c;docker images'
+alias dce='docker compose exec'
+alias dps='c; docker ps'
+alias dcps='c; docker compose ps'
 alias dcu='docker-compose up -d'
 alias dcd='docker-compose down'
+# alias dca='docker attach $(docker compose ps -q api)'
+alias dca='docker attach $(docker compose ps -q backend)'
+alias dn='docker network'
+alias dni='docker network inspect'
 
 alias k='xdotool key'
 alias ku='xdotool keyup'
@@ -121,6 +137,7 @@ alias discord="LIBVA_DRIVER_NAME=i915 discord --ignore-gpu-blocklist --disable-f
 alias ncdu='ncdu --color dark'
 alias btop='btop --utf-force'
 alias nf='c; neofetch'
+alias bt='bluetoothctl'
 # alias sudo="sudo -p 'Doors are shut, use your key :'"
 # alias sudo='sudo -p " : "'
 alias sudo='sudo -p " : "'
