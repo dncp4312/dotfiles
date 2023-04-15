@@ -14,14 +14,14 @@ esac
 
 case "$1" in
     'normal')   
-	dconf write /org/onboard/auto-show/enabled false
-	xinput enable 'SYNA32A0:00 06CB:CE14 Touchpad'
-	xinput enable 'AT Translated Set 2 keyboard'
+	# dconf write /org/onboard/auto-show/enabled false
+	# xinput enable 'SYNA32A0:00 06CB:CE14 Touchpad'
+	# xinput enable 'AT Translated Set 2 keyboard'
 	;;
     'inverted'|'left'|'right')   
-	dconf write /org/onboard/auto-show/enabled true
-	xinput disable 'SYNA32A0:00 06CB:CE14 Touchpad'
-	xinput disable 'AT Translated Set 2 keyboard'
+	# dconf write /org/onboard/auto-show/enabled true
+	# xinput disable 'SYNA32A0:00 06CB:CE14 Touchpad'
+	# xinput disable 'AT Translated Set 2 keyboard'
 	;;
     *)  
 	;;
