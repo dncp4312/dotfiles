@@ -3,9 +3,12 @@
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Environment
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
-export bliss=#8a2be2
+# export bliss=#8a2be2
 # export blissful=#7209b7
+export bliss=#7209b7
 # export blood=#AF0000
+# export bliss=$blood
+      # Xft.dpi: 192                   \n |
 
 echo "Xcursor.theme: phinger-cursors \n |
       Xcursor.size: 36"                 | xrdb
@@ -20,20 +23,24 @@ restore_fehbg &
 pgrep -x picom > /dev/null || picom &
 pgrep -x sxhkd > /dev/null && killall sxhkd ; sxhkd &
 if [[ "$1" = 0  ]] && [[ $(hostnamectl --static) -eq 'envy' ]]; then
-    auto_rotate.sh &
+    # auto_rotate.sh &
     libinput-gestures-setup start &
 fi
 launch_polybar &
+xss-lock i3lock.sh &
+[[ "$1" = 0  ]] && firefox -P Comms --no-remote --class Comms &
+[[ "$1" = 0  ]] && sh -c 'sleep 2 && polybar-msg cmd restart' & 
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Monitor
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
-bspc monitor $(xrandr | awk '/ connected/{print $1}') -d 1 2 3 4 5 firefox 7
+bspc monitor $(xrandr | awk '/ connected/{print $1}') -d 1 2 3 4 5 6 firefox 8
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Desktops
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 bspc desktop firefox -l monocle
+bspc desktop 8 -l monocle
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Gaps & Borders
@@ -70,6 +77,8 @@ bspc config pointer_follows_focus true
 # Rules
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 bspc rule -a firefox desktop='firefox' follow=on
+bspc rule -a Comms desktop=8 follow=off
+bspc rule -a Slack desktop=8 follow=off
 bspc rule -a chromium desktop='firefox' follow=on
 bspc rule -a Gpick sticky=on state=floating center=on
 bspc rule -a discord sticky=on state=floating center=on rectangle=1000x800+0+0

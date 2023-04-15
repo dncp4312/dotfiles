@@ -17,6 +17,8 @@ set shell=/bin/zsh
 set splitright
 set splitbelow
 set path+=**
+set fillchars=fold:\ 
+" set foldtext=v:folddashes.substitute(getline(v:foldstart),'***','','g')
 " set termwinsize=10x0
 " set termguicolors
 " set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
@@ -27,7 +29,12 @@ set clipboard=unnamedplus
 " set cursorlineopt=number
 " set list listchars=tab:>,trail:<,nbsp:.
 " set ttymouse=sgr
-" set mouse=a
+set mouse=a
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000
+set undoreload=10000
+" set iskeyword-=_
 " filetype on
 " filetype indent on
 filetype plugin on
@@ -87,7 +94,9 @@ map <Leader>= gg=G``
 
 "  Command_Mode
 " ━━━━━━━━━━━━━━
-cnoremap w!! execute 'silent! write !sudo tee > /dev/null %' <bar> edit!
+
+" cnoremap <silent> w!! execute 'silent! write !sudo -p " : "tee > /dev/null %' <bar> edit!
+cnoremap <silent> w!! execute 'silent! write !sudo - tee > /dev/null %' <bar> edit!
 
 "  Insert_Mode
 " ━━━━━━━━━━━━━━
@@ -169,7 +178,7 @@ highlight Identifier ctermfg=darkcyan
 highlight Statement ctermfg=darkmagenta
 highlight PreProc ctermfg=magenta
 highlight Type ctermfg=yellow
-highlight Underline ctermfg=red cterm=reverse
+" highlight Underline ctermfg=red cterm=reverse
 highlight Ignore ctermfg=red cterm=reverse
 highlight String ctermfg=darkgreen
 highlight Boolean ctermfg=blue
@@ -196,6 +205,9 @@ highlight Conceal ctermbg=16 ctermfg=16
 " ━━━━━━━━━━━━━━
 highlight rubyInterpolationDelimiter ctermfg=white
 highlight rubyTestMacro ctermfg=darkmagenta
+highlight rubyAssertion ctermfg=darkcyan
+highlight rubyPseudoVariable ctermfg=blue
+highlight rubyTodo ctermfg=white ctermbg=darkmagenta
 " highlight rubyString ctermfg=darkgreen
 
 "  CoC
@@ -264,6 +276,7 @@ nnoremap ss :call SynStack()<CR>
 call plug#begin()
   Plug 'vimwiki/vimwiki'
   Plug 'tpope/vim-fugitive'
+  Plug 'samoshkin/vim-mergetool'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'itchyny/lightline.vim'
   Plug 'andymass/vim-matchup'
@@ -275,6 +288,7 @@ call plug#begin()
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-abolish'
+  "Plug 'github/copilot.vim'
    
 "  SnipMate
 " ━━━━━━━━━━━━━━
@@ -316,15 +330,29 @@ let g:lightline =   {
 
 "  RSpec
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+" let g:rspec_command = '!clear ; bundle exec rspec {spec}'
+let g:rspec_command = '!clear ; docker compose exec -e RAILS_ENV=test backend bundle exec rspec {spec}'
+
 nmap <Leader>t :call RunCurrentSpecFile()<CR>
 nmap <Leader>a :call RunAllSpecs()<CR>
 nmap <Leader>n :call RunNearestSpec()<CR>
 " map <Leader>l :call RunLastSpec()<CR>
 
+"  Tabularize
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+nmap <silent> t= :Tabularize /=<CR>
+nmap <silent> t> :Tabularize /=><CR>
+nmap <silent> t( :Tabularize /(<CR>
+nmap <silent> t) :Tabularize /)<CR>
+nmap <silent> t{ :Tabularize /{<CR>
+nmap <silent> t} :Tabularize /}<CR>
+nmap <silent> t[ :Tabularize /[<CR>
+nmap <silent> t] :Tabularize /]<CR>
+
 "  CoC
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:coc_global_extentions = ['coc-tabnine', 'coc-snippets', 
-	    \'coc-solargraph', 'coc-pairs',
+	    \'coc-solargraph', 'coc-pairs', 'coc-volar',
 	    \'coc-json']
 
 let g:coc_config_home = '$XDG_CONFIG_HOME/vim/plug-config'
@@ -340,6 +368,24 @@ function! CheckBackspace() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+			" " Press Tab and Shift+Tab and navigate around completion selections
+			" inoremap <silent><expr> <Tab>
+			"   \ pumvisible() ? "\<C-n>" :
+			"   \ <SID>check_back_space() ? "\<Tab>" :
+			"   \ coc#refresh()
+			" inoremap <silent><expr> <S-Tab>
+			"   \ pumvisible() ? "\<C-p>" :
+			"   \ <SID>check_back_space() ? "\<S-Tab>" :
+			"   \ coc#refresh()
+			"
+			" " Press Enter to select completion items or expand snippets
+			" inoremap <silent><expr> <CR>
+			"   \ pumvisible() ? "\<C-y>" :
+			"   \ "\<C-g>u\<CR>"
+			"
+			" let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
+			" let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
 
 " Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>
@@ -361,3 +407,4 @@ let g:snipMate = { 'snippet_version' : 1}
 "  Smoothie
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:smoothie_update_interval = 1
+
