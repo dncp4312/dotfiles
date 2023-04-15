@@ -59,6 +59,11 @@ super + b
 	&& bluetoothctl power off                                            \
 	|| bluetoothctl power on && bluetoothctl connect 8C:64:A2:61:CB:FC
 
+alt + b
+	echo -e "a2dp-sink\nheadset-head-unit"                               \
+	| rofi -dmenu -no-show-icons -theme ~/.config/rofi/bt_profile.rasi   \ 
+	| xargs pactl set-card-profile bluez_card.8C_64_A2_61_CB_FC
+
 XF86MonBrightness{Up,Down}
 	backlight_{brighten,dim}.sh
 
@@ -268,7 +273,7 @@ super + shift + r : {h,j,k,l}
 # super + shift + {h,j,k,l}
 	# bspc node -v {-20 0,0 20,0 -20,20 0}
 
-alt + t
+alt + w
 	[[ $(xrandr --verbose | awk '/eDP-1/\{print $6\}') =~ normal\|inverted ]]                  \
 	&& feh --recursive --randomize --bg-fill --no-fehbg /home/xevil/Pictures/Wallpapers/Pics   \
 	|| feh --recursive --randomize --bg-fill --no-fehbg /home/xevil/Pictures/Wallpapers/Ports
