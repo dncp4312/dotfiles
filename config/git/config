@@ -15,6 +15,7 @@
 	stash-staged = "!bash -c \"git stash --keep-index; git stash push -m \"staged\" --keep-index; git stash pop stash@{1}\""
         hs = log --pretty='%C(yellow)%p %C(yellow bold)%h %C(magenta bold)%<|(12)%cN%C(auto)%d %Creset%s'
         hsd = log --pretty='%C(yellow)%cD %C(yellow bold)%h %C(magenta bold)%<|(12)%cN%C(auto)%d %Creset%s'
+	child = "!bash -c 'git log --format=%H --reverse --ancestry-path ${1:-HEAD}..${2:\"$(git rev-parse --abbrev-ref HEAD)\"} | head -1' -"
 
 [color]
 	ui = true
