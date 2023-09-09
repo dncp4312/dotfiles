@@ -14,4 +14,8 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
+
+  -- colorschemes
+  use ('bluz71/vim-moonfly-colors', { as = 'moonfly' })
+  -- use ('nyoom-engineering/oxocarbon.nvim', { as = 'oxocarbon' }) 
 end)

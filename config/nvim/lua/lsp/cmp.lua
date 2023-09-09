@@ -3,8 +3,8 @@ local luasnip = require 'luasnip'
 
 cmp.setup {
     sources = {
-	{ name = 'nvim_lsp' },
 	{ name = 'luasnip' },
+	{ name = 'nvim_lsp' },
     },
     snippet = {
 	expand = function(args)
