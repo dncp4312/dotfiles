@@ -3,7 +3,7 @@ vim.g.mapleader = ' '
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 -- lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
+  local opts = { buffer = bufnr, remap = false }
 
   vim.keymap.set("n", "gd",          function() vim.lsp.buf.definition()       end, opts)
   vim.keymap.set("n", "]g",          function() vim.diagnostic.goto_next()     end, opts)
@@ -16,4 +16,3 @@ vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
   -- vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references()       end, opts)
   -- vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename()           end, opts)
 -- end)
-

@@ -1,5 +1,6 @@
 require('lspconfig').solargraph.setup {
     cmd = { 'docker', 'exec', '-i', 'solargraph', 'solargraph', 'stdio' },
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
     settings = {
 	solargraph = {
 	    autoformat = true,

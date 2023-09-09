@@ -1,3 +1,5 @@
 require('base.sets')
 require('base.remaps')
 require('base.plugins')
+require('base.configs')
+require('base.auto_commands')
