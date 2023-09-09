@@ -12,7 +12,7 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.undodir = '~/.local/share/nvim/undodir'
+vim.opt.undodir = vim.env.XDG_DATA_HOME .. '/nvim/undodir'
 -- vim.opt.undolevels = 1000
 -- vim.opt.undoreload = 10000 
 
@@ -21,7 +21,7 @@ vim.opt.incsearch = true
 
 -- vim.opt.termguicolors = true
 
--- vim.opt.scrolloff = 5
+vim.opt.scrolloff = 15
 -- vim.opt.signcolumn = 'yes'
 -- vim.opt.isfname:append('@-@')
 
