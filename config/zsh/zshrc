@@ -12,8 +12,14 @@
     f           () { find . $1 | rg $1 }
     rb          () { curl cht.sh/ruby/$1 }
     gsd         () { git stash drop stash@{$1} }
+    nif         () { fzf | xargs nvim }
     vif         () { file=$(fzf) && vim "$file" }
+    des         () { docker exec -it $1 sh }
+    dcs         () { docker compose exec -it $1 sh }
     run         () { nohup $1 $2 > /dev/null & disown }
+    tare        () { tar -xvf $1 }
+    tarc        () { tar -cvzf $1.tar.gz $1 }
+    fdiff       () { diff -u $1 $2 | diff-so-fancy }
     brighten    () { echo $1 > /sys/class/backlight/amdgpu_bl0/brightness }
     depends     () { awk '/Required/{for (i=4;i<NF+1;++i) print $i}' <(pQ -i $1) }
     colormap    () { for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done }
@@ -23,12 +29,15 @@
     fcd         () { dir=$(find -type d | fzf) || return ; 
 		     clear ; echo "\033[0;30mCurrent Directory :\033[0m"   
 		     cd "$dir" ; exa --group-directories-first --color=always }
-
-    fdiff       () { diff -u $1 $2 | diff-so-fancy }
     setlive     () { echo $(readlink -f $1) > $XDG_CONFIG_HOME/live ; bspc wm -r }
 
-    syncup () { rsync -av ~/Projects/hta_be home:Projects/ --delete }
-    syncdn () { rsync -av home:Projects/hta_be ~/Projects/ --delete }
+    # decode_jwt  () { cut -d"." -f2 <<< $1 | base64 --decode | jq }
+    decode_jwt() {
+    IFS='.' read -r part1 part2 part3 <<< "$1"
+	echo "$part1" | tr -d '\n' | base64 --decode | jq
+	echo "$part2" | tr -d '\n' | base64 --decode | jq
+	echo "$part3" | tr -d '\n' | base64 --decode | jq
+    }
 
     rv() { selection=$(rg $1 --vimgrep | fzf)
 	   line=$(echo $selection| cut -d: -f2)
@@ -38,34 +47,12 @@
 
     list() { emulate -L zsh ; clear ; exa --group-directories-first }
 
-    update_master () {
-	    current=$(git branch --show-current)
-	    bliss='\e[0;35m'
-	    blissbold='\033[0;32m'
-	    nc='\033[0m'
-	    printf "\n${bliss}Checking out master...${nc}\n"      ; git checkout master
-	    printf "\n${bliss}Fetching upstream master...${nc}\n" ; git fetch upstream master
-	    printf "\n${bliss}Merging upstream master...${nc}\n"  ; git merge upstream/master --ff-only
-	    printf "\n${bliss}Updating origin...${nc}\n"          ; git push origin master
-	    printf "\n${bliss}Checking out $current...${nc}\n"    ; git checkout $current
-	}
-
-    ppr () {
-	    bliss='\033[0;35m'
-	    nc='\033[0m'
-
-	    update_master
-	    printf "\n${bliss}Rebasing...${nc}\n"         ; git rebase master
-	    printf "\n${bliss}Updating remote...${nc}\n"  ; git push -u origin $(git branch --show-current)
-
-	    printf "\n${bliss}Pull-request prepared.\nOpening bitbucket...${nc}"
-	    firefox "https://bitbucket.org/dncp4312/hta_be/branches/?status=all"	
-	}
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                                                             shortcuts                                                                             ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
     # bindkey -s '^o' 'vim $(fzf) ^M'
     bindkey -s '^p' 'vif ^M'
+    bindkey -s '^k' 'nif ^M'
     bindkey -s '^g' 'fcd ^M'
     bindkey -s '^w' 'sysres iwd ^M'
     bindkey -s '^[p' 'ping -c8 1.1.1.1 ^M'
@@ -73,10 +60,10 @@
 # ┃                                                                              sources                                                                              ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    [[ ! -f $XDG_CONFIG_HOME/zsh/grml.zsh   ]] || source $XDG_CONFIG_HOME/zsh/grml.zsh
-    [[ ! -f $XDG_CONFIG_HOME/zsh/aliases    ]] || source $XDG_CONFIG_HOME/zsh/aliases
+    [[ ! -f $ZDOTDIR/grml.zsh ]] || source $ZDOTDIR/grml.zsh
+    [[ ! -f $ZDOTDIR/aliases  ]] || source $ZDOTDIR/aliases
+    [[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh ; source $ZDOTDIR/.p10k/powerlevel10k.zsh-theme
     [[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
-    [[ ! -f $XDG_CONFIG_HOME/zsh/p10k.zsh   ]] || source $XDG_CONFIG_HOME/zsh/p10k.zsh ; source $XDG_CONFIG_HOME/zsh/.p10k/powerlevel10k.zsh-theme
     # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                                                           customizations                                                                          ┃ #
