@@ -12,10 +12,10 @@ export SYSTEMD_EDITOR=vim
 export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export EXA_COLORS="da=33"
-export FZF_DEFAULT_COMMAND='rg --files'
-export FZF_DEFAULT_OPTS="--height=80% --layout=reverse-list --border=horizontal --no-info --preview='bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
+export FZF_DEFAULT_COMMAND='rg --files --follow'
+export FZF_DEFAULT_OPTS="--height=80% --layout=reverse-list --border=horizontal --no-info --preview='[ -f {} ] && bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
 export FEHBG="$HOME/.local/bin/restore_fehbg"
-export GTK_THEME=Orchis-Purple-Dark-Compact
+# export GTK_THEME=Orchis-Purple-Dark-Compact
 export GTK_THEME=Graphite-Dark-Alt
 
 export XDG_CONFIG_HOME="$HOME/.config"
