@@ -1,21 +1,32 @@
 #Temporary
-alias hb="cd ~/Projects/hta_be ; rails c"
-alias rs='clear ; bundle exec rspec'
-alias be='bundle exec'
+alias bs='cd ~/Guardian/myzen/opt/MyZen'
+alias punchin='docker exec zen xdotool mousemove 450 120 click 1'
+
+alias dcab='docker attach $(docker compose ps -q backend)'
+alias dcaf='docker attach $(docker compose ps -q frontend_v3)'
+alias rails='docker compose exec backend bundle exec rails'
+
+alias dc='clear ; docker compose exec backend bundle exec rails console'
+alias dt='clear ; docker compose exec backend bundle exec rails console -e test'
+alias ds='clear ; docker compose exec -e RAILS_ENV=test backend bundle exec rspec'
+
+alias dcp='clear ; ssh -t hta docker exec -it docker_projects_hta-backend_1 bundle exec rails console -e production'
+alias dcs='clear ; ssh -t hta docker exec -it docker_projects_hta-backend-staging_1 bundle exec rails console -e staging'
+alias hpl='clear ; ssh -t hta docker exec -itw /home/app/shared/logs -it docker_projects_hta-backend_1 bash'
+alias hsl='clear ; ssh -t hta docker exec -itw /home/app/shared/logs -it docker_projects_hta-backend-staging_1 bash'
+
 # alias ruby='c;ruby'
 alias ht="cd ~/Projects/hta_be"
 alias gems="cd $XDG_DATA_HOME/gem/gems ; c"
-alias rc="be rails c"
-alias rt="be rails c -e test"
-alias rst="be rails s -e test"
 alias sk="be sidekiq"
-alias -s rb=vim
 alias ph='cd ~/.local/share/pry'
 
 alias cfg='cd ~/.config'
 alias -s conf=vim
 alias -s yml=vim
 alias -s rb=vim
+alias -s ts=nvim
+alias -s vue=nvim
 
 #Aliases
 alias x=exit
@@ -23,29 +34,33 @@ alias c=clear
 alias cls='c;ls'
 alias v=vim
 alias su='sudo -i'
+alias dots='cd ~/.dotfiles'
 
 alias ls='exa --group-directories-first'
+alias la='ls -a'
 alias ll='ls -l'
-alias la='ls -lag'
+alias lla='ls -lag'
 # alias grep=rg
 # alias cat=bat
 #alias cat=ccat
 alias lat=lolcat
 alias yd="youtube-dl -o '~/Videos/%(title)s-%(id)s.%(ext)s"  
 
-alias ea="vim ~/.config/zsh/aliases"
-alias ep="vim ~/.zprofile"
-alias ez="vim ~/.config/zsh/.zshrc"
-alias es="vim ~/.config/sxhkd/sxhkdrc"
-alias eb="vim ~/.config/bspwm/bspwmrc"
-alias ec="vim ~/.config/picom/picom.conf"
-alias er="vim ~/.config/polybar/config.ini"
-alias el="vim ~/.config/alacritty/alacritty.yml"
-alias ev="vim ~/.config/vim/vimrc"
+alias ea='vim ~/.config/zsh/aliases'
+alias ep='vim ~/.zprofile'
+alias ez='vim ~/.config/zsh/.zshrc'
+alias es='vim ~/.config/sxhkd/sxhkdrc'
+alias eb='vim ~/.config/bspwm/bspwmrc'
+alias ec='vim ~/.config/picom/picom.conf'
+alias er='vim ~/.config/polybar/config.ini'
+alias el='vim ~/.config/alacritty/alacritty.yml'
+alias ev='vim ~/.config/vim/vimrc'
 alias eg='vim ~/.config/libinput-gestures.conf'
 alias ef='vim ~/.config/rofi/xeha.rasi'
+alias ed='vim ~/Projects/hta_bundle/backend/dev.rb'
 
 alias pQ='pacman -Q'
+alias pI='pacman -Qi'
 alias pT='pactree -d 1'
 alias pTf='pactree'
 alias pTr='pactree -r'
@@ -83,6 +98,7 @@ alias gs='c ; git status'
 # alias gl='c ; git log --oneline'
 alias gl='c ; git hs'
 alias gld='c ; git hsd'
+alias glp='c ; git log --patch --oneline'
 alias ga='git add'
 alias gap='git add -p'
 alias gc='git commit -m'
@@ -96,7 +112,7 @@ alias gba='git branch -a'
 alias gbc='git branch --show-current'
 alias gbd='git branch --delete'
 alias gbD='git branch --delete --force'
-alias gum='git reset HEAD~1 --hard'
+alias guc='git reset HEAD~1 --hard'
 alias gt='git blot'
 alias gh='git glo'
 alias gd='git diff'
@@ -110,19 +126,29 @@ alias gsa='git stash apply --index'
 alias gca='git commit --amend --no-edit'
 alias gwa='git worktree add'
 alias gwr='git worktree remove'
-alias gpr='git branch -r --merged origin/dev | grep -Ev "(^\*|master|dev|staging)" | grep origin | cut -d"/" -f2 | xargs git push --delete origin'
+alias gpr='git branch -r --merged origin/development | grep -Ev "(^\*|master|development|staging)" | grep origin | sed "s/origin\///"| xargs git push --delete origin'
+alias gpl='git branch --merged development | grep -Ev "(^\*|master|development|staging)" | xargs git branch --delete'
+alias gcp='git cherry-pick'
+alias gcf="git branch | fzf --no-preview | tr -d '[* ]' | xargs git checkout "
+alias gsrh='git show REBASE_HEAD'
 
 alias d='docker'
+alias dr='docker run -it --rm'
+alias de='docker exec -it'
 alias di='c;docker images'
 alias dce='docker compose exec'
 alias dps='c; docker ps'
 alias dcps='c; docker compose ps'
 alias dcu='docker-compose up -d'
 alias dcd='docker-compose down'
+alias dcr='docker-compose down; docker compose up -d'
 # alias dca='docker attach $(docker compose ps -q api)'
-alias dca='docker attach $(docker compose ps -q backend)'
 alias dn='docker network'
 alias dni='docker network inspect'
+
+alias tsu='sudo systemctl start tailscaled'
+alias tsd='sudo systemctl stop tailscaled'
+alias tssh='docker exec -it tailscale ssh'
 
 alias k='xdotool key'
 alias ku='xdotool keyup'
@@ -131,7 +157,7 @@ alias kd='xdotool keydown'
 alias bq='bspc quit'
 alias br='bspc wm -r'
 
-alias restore_hta_db="mongorestore --nsFrom 'hta_be_production.*' --nsTo 'hta_be_dev.*' --drop $1"
+alias restore_hta_db="mongorestore --nsFrom 'hta_be_production.*' --nsTo 'hta_be_dev.*' --drop"
 alias matrix="unimatrix -n -s 94 -l 'o' -f | lolcat"
 alias discord="LIBVA_DRIVER_NAME=i915 discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-feature=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
 alias ncdu='ncdu --color dark'
@@ -141,3 +167,5 @@ alias bt='bluetoothctl'
 # alias sudo="sudo -p 'Doors are shut, use your key :'"
 # alias sudo='sudo -p " : "'
 alias sudo='sudo -p " : "'
+alias screenkey="screenkey -t 0.8 -s small --font-color '$bliss' > /dev/null 2>&1 &"
+alias wifi='iwctl station wlan0 get-networks | awk '\''{gsub("\x1B\\[[0-9;]*[JKmsu]", ""); if (NR==5) sub(">", "")} NR>4 {print $1}'\'' | fzf | xargs -I {} iwctl station wlan0 connect {}'
