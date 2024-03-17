@@ -2,6 +2,13 @@
 # ┃                                        applications                                         ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
 
+super + c
+	firefox -P Comms --class Comms
+	# bspc node $(bspc query -N -n .window | xargs -i sh -c 'bspc query --node \{\} -T | grep -q Comms && echo \{\}') -f
+
+super + shift + p
+	firefox -private-window
+
 super + i
 	immerse.sh
 
@@ -9,20 +16,21 @@ super + o
 	onboard
 
 super + v
-	alacritty -e vim
+	alacritty --class VimWiki -e sh -c 'terminaltheme.sh xeha ; vim +VimwikiIndex'
 
 super + Return
 	alacritty
 
 super + d
-	[[ $(pgrep Discord) ]]                             \
-	&& bspc node $(bspc query -N -n .floating          \
-	    | xargs -i sh -c 'bspc query --node \{\} -T    \
-	    | grep -q discord && echo \{\}') --flag hidden \
-	|| discord
+	slack
+	# [[ $(pgrep slack) ]]                             \
+	# && bspc node $(bspc query -N -n .floating          \
+	#     | xargs -i sh -c 'bspc query --node \{\} -T    \
+	#     | grep -q slack && echo \{\}') --flag hidden \
+	# || slack
 
 super + shift + d
-	pkill Discord
+	pkill Slack
 
 super + f
 	[[ $(pgrep firefox) ]]                           \
@@ -54,15 +62,24 @@ super + x
 # ┃                                            envy                                             ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
 
+# super + b
+# 	rofi_bluetooth.sh
+#      [[ $(bluetoothctl devices Connected | grep Joy) ]] && ([[ $(bluetoothctl devices Connected | wc -l) -eq 1 ]] && bluetoothctl power off || bluetoothctl disconnect $(bluetoothctl devices | grep Joy | cut -d' ' -f2)) || (bluetoothctl power on ; bluetoothctl connect $(bluetoothctl devices | grep Joy | cut -d' ' -f2))
+
 super + b
-	[[ $(bluetoothctl info | grep 'Device') ]]                           \
-	&& bluetoothctl power off                                            \
-	|| bluetoothctl power on && bluetoothctl connect 8C:64:A2:61:CB:FC
+    [[ $(bluetoothctl devices Connected | grep Joy) ]]                                                                                                                 \
+    && ([[ $(bluetoothctl devices Connected | wc -l) -eq 1 ]] && bluetoothctl power off || bluetoothctl disconnect $(bluetoothctl devices | grep Joy | cut -d' ' -f2)) \
+    || (bluetoothctl power on ; bluetoothctl connect $(bluetoothctl devices | grep Joy | cut -d' ' -f2))
+
+super + shift + b
+    [[ $(bluetoothctl devices Connected | grep Z2) ]]                                                                                                                 \
+    && ([[ $(bluetoothctl devices Connected | wc -l) -eq 1 ]] && bluetoothctl power off || bluetoothctl disconnect $(bluetoothctl devices | grep Z2 | cut -d' ' -f2)) \
+    || (bluetoothctl power on ; bluetoothctl connect $(bluetoothctl devices | grep Z2 | cut -d' ' -f2))
 
 alt + b
 	echo -e "a2dp-sink\nheadset-head-unit"                               \
 	| rofi -dmenu -no-show-icons -theme ~/.config/rofi/bt_profile.rasi   \ 
-	| xargs pactl set-card-profile bluez_card.8C_64_A2_61_CB_FC
+	| xargs pactl set-card-profile bluez_card.$(bluetoothctl devices Connected | cut -d' ' -f2 | sed 's/:/_/g')
 
 XF86MonBrightness{Up,Down}
 	backlight_{brighten,dim}.sh
@@ -100,7 +117,7 @@ Print
 	import -window root /home/xevil/Pictures/Screenshots/capture_$(date +%F_%H%M%S).png
 
 alt + Print
-	import /home/xevil/Projects/hta_be/dev/shots/capture_$(date +%F_%H%M%S).png
+	import /home/xevil/Projects/hta_bundle/backend/dev/screenshots/capture_$(date +%F_%H%M%S).png
 
 alt + F12
 	find ~/Wallpapers/ -mindepth 1 -type d | rg -v Live \
@@ -223,8 +240,8 @@ super + {o,i}
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-8}
-	bspc {desktop -f,node -d} '^{1-8}'
+super + {_,shift + }{1-9}
+	bspc {desktop -f,node -d} '^{1-9}'
 	#bspc {desktop -f,node -d} '^{1-9,10}'
 
 super + ctrl + shift + {1-8}
