@@ -42,7 +42,7 @@
 	mailmap = true
 
 [diff-so-fancy]
-	# markEmptyLines = false
+	markEmptyLines = false
 
 # [push]
 # 	autoSetupRemote = true
@@ -57,3 +57,6 @@
 
 [advice]
 	statusHints = off
+
+[branch]
+	sort = -committerdate
