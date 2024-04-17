@@ -80,6 +80,7 @@ let mapleader = " "
 " autocmd BufWritePre * normal gg=G``
 " autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 autocmd BufWinEnter,BufNewFile * setlocal formatoptions-=cro
+autocmd BufRead,BufNewFile *.vue setfiletype html
 autocmd VimEnter * silent !echo "\e[4 q"
 autocmd VimLeave * silent !echo "\e[4 q"
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
@@ -130,6 +131,7 @@ nnoremap <silent> <Leader>g :highlight! Comment ctermfg=7<CR>
 nnoremap <silent> <Leader>h :highlight! Comment ctermfg=16<CR>
 nnoremap <silent> <Leader>x <cmd>!chmod +x %<CR>
 nnoremap <silent> <Leader>gp gcip
+nnoremap <silent> <Leader>gf :let @+=substitute(expand('%:p'), '^' . escape(getcwd(), '/\') . '/', '', '') . ':' . line('.') . "\n"<CR>
 " noremap <ESC> <Nop>
 " nnoremap <C-j> <C-w>j
 " nnoremap <C-h> <C-w>h
@@ -409,11 +411,24 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 "  VimWiki
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-let g:vimwiki_list = [ { 'path' : '~/Documents/Vimwiki/' } ]
-"###### VimWiki ##########################
+let g:vimwiki_list = [ { 'path' : '~/Documents/Vimwiki/' }, { 'path' : '~/Documents/Vimwiki/HTA_Updates' } ]
 
+" let g:vimwiki_listsyms = '✗○◐●✓'
+" nnoremap <silent> <Leader>u :silent Vimwiki2HTML<CR>:silent execute "!update_ekke > /dev/null 2>&1 | true"<CR>:redraw!<CR>
+nnoremap <silent> <Leader>u :silent Vimwiki2HTML<CR>:silent call UpdateEkke()<CR>
+
+function! UpdateEkke()
+    silent !rm ~/Documents/hta_updates -r
+    silent !mv ~/Documents/Vimwiki_html ~/Documents/hta_updates
+    silent !mv ~/Documents/hta_updates/HTA_Updates.html ~/Documents/hta_updates/index.html
+    silent !rsync -av ~/Documents/hta_updates home:Server
+    redraw!
+endfunction
+
+" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 "  SnipMate
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:snipMate = { 'snippet_version' : 1}
@@ -422,3 +437,50 @@ let g:snipMate = { 'snippet_version' : 1}
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let g:smoothie_update_interval = 1
 
+function! Namespace()
+    argdo %s/\s*module /::/g | update
+    argdo %s/\n::/::/g | update
+    argdo %s/end\n\s*end\nend/end/g | update
+    argdo %s/::Permissible/module V2::Permissible/g | update
+    argdo %s/\n\nend/\rend/g | update
+    argdo execute 'normal gg=G' | update
+endfunction
+
+function! ExtractScopes()
+    silent! g/^\n^ *def self\.with_/,/^ *def \(self\.with\)\@!.*/-2d
+    write
+
+    let current_file = expand('%:p:t')
+    let class_name = substitute(current_file, '\.rb$', '', '')
+    let camel_class_name = substitute(class_name, '\(\<\w\)\(\w*\)\>', '\u\1\2', 'g')
+    let new_file = 'app/custom/traversible/' . class_name . '_scopes.rb'
+
+    enew
+    put ='# frozen_string_literal: true'
+    put =''
+    put ='module Traversible::' . substitute(camel_class_name, 'Lead', '', '') . 'Scopes'
+    put ='  def self.included(base)'
+    put ='    class << base'
+    put = substitute(getreg('+'), 'self\.', '', 'g')
+    put ='    end'
+    put ='  end'
+    put ='end'
+
+    execute 'normal! ggdd'
+    execute 'write ' . new_file
+    execute 'normal! gg=G'
+    write
+
+    bdelete!
+    bdelete!
+endfunction
+
+function! ProcessAllBuffers()
+    let buffer_list = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    let current_buffer = bufnr('%')
+    for buffer_number in buffer_list
+	execute buffer_number . 'b'
+	call ExtractScopes()
+    endfor
+    execute current_buffer . 'b'
+endfunction
