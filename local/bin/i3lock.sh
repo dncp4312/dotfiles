@@ -6,6 +6,9 @@ WRONG='#ffffffff'
 BLISS='#8a2be2ff'
 BLLSS='#8a2be235'
 
+# rm /tmp/ss.png /tmp/crptd.png ||
+# import -window root /tmp/ss.png &&
+# corrupter /tmp/ss.png /tmp/crptd.png &&
 i3lock \
 --ignore-empty-password      \
 --insidever-color=$CLEAR     \
