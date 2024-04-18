@@ -28,13 +28,12 @@ if [[ "$1" = 0  ]] && [[ $(hostnamectl --static) -eq 'envy' ]]; then
 fi
 launch_polybar &
 xss-lock i3lock.sh &
-[[ "$1" = 0  ]] && firefox -P Comms --no-remote --class Comms &
 [[ "$1" = 0  ]] && sh -c 'sleep 2 && polybar-msg cmd restart' & 
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Monitor
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
-bspc monitor $(xrandr | awk '/ connected/{print $1}') -d 1 2 3 4 5 6 firefox 8
+bspc monitor $(xrandr | awk '/ connected/{print $1}') -d 1 2 3 4 5 6 firefox 8 9
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Desktops
@@ -77,11 +76,16 @@ bspc config pointer_follows_focus true
 # Rules
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 bspc rule -a firefox desktop='firefox' follow=on
+bspc rule -a firefox:Devtools desktop=8 follow=off
 bspc rule -a Comms desktop=8 follow=off
 bspc rule -a Slack desktop=8 follow=off
-bspc rule -a chromium desktop='firefox' follow=on
+bspc rule -a Chromium desktop='firefox' follow=on
+bspc rule -a Chromium:crx_nfecgfopkdiicnnmccikafaofaoffegm desktop=8 follow=off
+bspc rule -a mpv:gl state=floating center=on rectangle=576x324+0+0 follow=off 
 bspc rule -a Gpick sticky=on state=floating center=on
 bspc rule -a discord sticky=on state=floating center=on rectangle=1000x800+0+0
+bspc rule -a KeePassXC desktop=9 state=floating #hidden=on rectangle=800x600+0+0
+# bspc rule -a Slack sticky=on state=floating center=on rectangle=1000x800+0+0
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Envy
