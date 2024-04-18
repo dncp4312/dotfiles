@@ -1,11 +1,11 @@
 @import "xeha.rasi"
 
 window {
-    width:             25%;
+    width:             28%;
 }
 
 listview {
-    lines:             -1;
+    lines:             5;
     columns:           1;
     fixed-height:      false;
 }
