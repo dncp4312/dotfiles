@@ -2,8 +2,6 @@ export DISPLAY=:0
 # export waloc="$(grep "file" $HOME/.config/nitrogen/bg-saved.cfg | cut -d "=" -f 2)"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.local/xbin"
-export PATH="$HOME/.local/share/rbenv/bin:$PATH"
-export PATH="$HOME/.local/share/rbenv/shims:$PATH"
 export PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
 export CHROME_EXECUTABLE="/usr/bin/brave"
 export MONGO_HOST=localhost
@@ -13,7 +11,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export EXA_COLORS="da=33"
 export FZF_DEFAULT_COMMAND='rg --files --follow'
-export FZF_DEFAULT_OPTS="--height=80% --layout=reverse-list --border=horizontal --no-info --preview='[ -f {} ] && bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
+export FZF_DEFAULT_OPTS="--exact --height=80% --layout=reverse-list --border=horizontal --no-info --preview='[ -f {} ] && bat --color=always --style=numbers {}' --color='border:magenta,prompt:magenta,hl:magenta,hl+:white,pointer:white,marker:white,bg+:magenta,gutter:grey'"
 export FEHBG="$HOME/.local/bin/restore_fehbg"
 # export GTK_THEME=Orchis-Purple-Dark-Compact
 export GTK_THEME=Graphite-Dark-Alt
@@ -40,8 +38,10 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph
 export TIMEWARRIORDB="$XDG_CONFIG_HOME"/timewarrior
+export PRY_HOME=$XDG_DATA_HOME/pry
 
+[[ ! -f $HOME/.secrets/env ]] || source $HOME/.secrets/env
 [[ -f ~/.zshrc ]] && . ~/.zshrc
-[[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx "$XINITRC" -- vt1 &> /dev/null
+[[ $XDG_VTNR -le 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx bspwm -- vt1 &> /dev/null
 # [[ $XDG_VTNR -eq 1 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx /usr/bin/bspwm -- vt1 &> /dev/null
 # [[ $XDG_VTNR -eq 2 && -z $SSH_TTY && $TTY =~ /dev/tty[0-9] ]] && exec startx /usr/bin/firefox -width 1920 -height 1080 -- vt1 &> /dev/null

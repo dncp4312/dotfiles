@@ -12,14 +12,16 @@
     f           () { find . $1 | rg $1 }
     rb          () { curl cht.sh/ruby/$1 }
     gsd         () { git stash drop stash@{$1} }
-    nif         () { fzf | xargs nvim }
+    nif         () { file=$(fzf) && nvim "$file" }
     vif         () { file=$(fzf) && vim "$file" }
     des         () { docker exec -it $1 sh }
     dcs         () { docker compose exec -it $1 sh }
+    dcr         () { docker compose down $1 ; docker compose up -d $1 }
     run         () { nohup $1 $2 > /dev/null & disown }
     tare        () { tar -xvf $1 }
     tarc        () { tar -cvzf $1.tar.gz $1 }
-    fdiff       () { diff -u $1 $2 | diff-so-fancy }
+    ntfy        () { curl https://ntfy.dncp4312.dev/$(uname -n) -d "$*" }
+    fdiff       () { diff -ru $1 $2 | diff-so-fancy }
     brighten    () { echo $1 > /sys/class/backlight/amdgpu_bl0/brightness }
     depends     () { awk '/Required/{for (i=4;i<NF+1;++i) print $i}' <(pQ -i $1) }
     colormap    () { for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done }
@@ -30,6 +32,8 @@
 		     clear ; echo "\033[0;30mCurrent Directory :\033[0m"   
 		     cd "$dir" ; exa --group-directories-first --color=always }
     setlive     () { echo $(readlink -f $1) > $XDG_CONFIG_HOME/live ; bspc wm -r }
+    png_to_b64  () { cat <(echo '  background-image: url(data:image/png;base64,') <(echo "$(convert $1 -resize $2x$2 png:- | base64)") <(echo ');') | tr -d '\n' > $(echo $1 | sed 's/.png//') }
+    gpl         () { git branch -r --merged | tr -d " " | grep origin | sed "s/origin\///" | grep -Ev "(^\*|master|development|staging|^$(git branch --show-current))" | xargs git branch --delete }
 
     # decode_jwt  () { cut -d"." -f2 <<< $1 | base64 --decode | jq }
     decode_jwt() {
@@ -51,6 +55,8 @@
 # ┃                                                                             shortcuts                                                                             ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
     # bindkey -s '^o' 'vim $(fzf) ^M'
+    bindkey -s '^b' 'gcf ^M'
+    bindkey -s '^n' 'gcfr ^M'
     bindkey -s '^p' 'vif ^M'
     bindkey -s '^k' 'nif ^M'
     bindkey -s '^g' 'fcd ^M'
@@ -62,20 +68,24 @@
     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
     [[ ! -f $ZDOTDIR/grml.zsh ]] || source $ZDOTDIR/grml.zsh
     [[ ! -f $ZDOTDIR/aliases  ]] || source $ZDOTDIR/aliases
+    [[ ! -f $ZDOTDIR/ekke.zsh ]] || source $ZDOTDIR/ekke.zsh
     [[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh ; source $ZDOTDIR/.p10k/powerlevel10k.zsh-theme
     [[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
     # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                                                           customizations                                                                          ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
-    terminaltheme.sh xeha 
-    eval "$(rbenv init -)"
-    # cd ~/Projects/hta_be/dev/PDFSpawner_Specs
-    # cd ~/Projects/hta_be/dev/db_seed
-    cd ~/Projects/hta_be
-    # cd ~/.dotfiles
-    alias ew=' vim ~/.local/bin/styli.sh'
-    alias sc=' cd ~/.cache/styli.sh'
 
-    chpwd_functions=(${chpwd_functions[@]} "list")
-    alias sl=setlive
+    terminaltheme.sh xeha 
+
+    # plugins=(git-auto-fetch)
+    # chpwd_functions=(${chpwd_functions[@]} "list")
+
+    # alias sl=setlive
+    # alias sc=' cd ~/.cache/styli.sh'
+    # alias ew=' vim ~/.local/bin/styli.sh'
+    alias cn='cd ~/.config/nvim/'
+
+    # echo 'phil\npp' | hta_login > /dev/null
+    be
