@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+
+flag = ARGV.select { _1[/^-/] }.first&.delete_prefix('-') || 'p'
+grep = ARGV.reject { _1[/^-/] }.first
+
+version = `git hs | grep #{grep} | head -n1 | awk '{print $NF}'`.chomp
+config = `git hs | grep #{grep} | head -n1 | awk '{print $(NF-2)}'`.chomp
+
+major, minor, patch = version.delete_prefix('v').split('.').map(&:to_i)
+major ||= 0
+minor ||= 0
+patch ||= 0
+
+case flag
+when 'M'
+  major += 1
+  minor = 0
+  patch = ''
+when 'm'
+  minor += 2
+  patch = ''
+when 'p'
+  patch += 2
+end
+
+new_version = "v#{major}.#{minor}.#{patch}".delete_suffix('.')
+`git commit -m "#{config} update #{new_version}"`
