@@ -18,8 +18,8 @@ return require('packer').startup(function(use)
 
   -- development_l1
   -- use 'andymass/vim-matchup'
-  -- use 'godlygeek/tabular'
-  -- use 'tomtom/tcomment_vim'
+  use 'godlygeek/tabular'
+  use 'tomtom/tcomment_vim'
   -- use 'tpope/vim-abolish'
   -- use 'tpope/vim-fugitive'
   -- use 'tpope/vim-repeat'
@@ -35,7 +35,7 @@ return require('packer').startup(function(use)
 
   -- ui
   -- use 'psliwka/vim-smoothie'
-  -- use 'itchyny/lightline.vim'
+  use 'itchyny/lightline.vim'
   -- use 'ap/vim-css-color'
 
 
