@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+PREFERRED_ORDER=(DP-1 eDP-1)
+
+active_monitors=$(xrandr | awk '/ connected/ {print $1}' | while read -r mon; do
+    xrandr | awk -v mon="$mon" '
+        $0 ~ "^" mon " connected" { in_block = 1; next }
+        in_block && /^[[:space:]]+[0-9]+x[0-9]+/ && /\+/ { exit 0 }
+        in_block && NF == 0 { exit 1 }
+    ' && echo "$mon"
+done)
+
+for monitor in "${PREFERRED_ORDER[@]}"; { echo "$active_monitors" | grep -Fx "$monitor" }
+echo "$active_monitors" | grep -vFx "$(printf '%s\n' "${PREFERRED_ORDER[@]}")"

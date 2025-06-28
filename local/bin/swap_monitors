@@ -1,0 +1,194 @@
+#!/bin/bash
+
+# Monitor Position Swapper
+# Usage: ./swap_monitors.sh [left|right|up|down]
+
+show_usage() {
+    echo "Usage: $0 [left|right|up|down]"
+    echo "  left  - swap with monitor to the left"
+    echo "  right - swap with monitor to the right"
+    echo "  up    - swap with monitor above"
+    echo "  down  - swap with monitor below"
+    exit 1
+}
+
+# Check if direction is provided
+if [ $# -ne 1 ]; then
+    show_usage
+fi
+
+DIRECTION="$1"
+
+# Validate direction
+case "$DIRECTION" in
+    left|right|up|down) ;;
+    *) show_usage ;;
+esac
+
+# Get active monitors and their positions
+get_monitor_info() {
+    xrandr --query | grep " connected.*[0-9]x[0-9]" | while read line; do
+        monitor=$(echo "$line" | awk '{print $1}')
+        resolution=$(echo "$line" | grep -o '[0-9]\+x[0-9]\+' | head -1)
+        position=$(echo "$line" | grep -o '+[0-9]\++[0-9]\+')
+        
+        if [ -n "$position" ]; then
+            x=$(echo "$position" | sed 's/+\([0-9]*\)+.*/\1/')
+            y=$(echo "$position" | sed 's/+[0-9]*+\([0-9]*\).*/\1/')
+            echo "$monitor $x $y $resolution"
+        fi
+    done
+}
+
+# Get currently focused monitor in bspwm
+get_focused_monitor() {
+    bspc query -M -m focused --names
+}
+
+# Get all monitor info into arrays
+declare -A monitor_x monitor_y monitor_res
+monitors=()
+
+while IFS=' ' read -r mon x y res; do
+    if [ -n "$mon" ]; then
+        monitors+=("$mon")
+        monitor_x["$mon"]=$x
+        monitor_y["$mon"]=$y
+        monitor_res["$mon"]=$res
+    fi
+done < <(get_monitor_info)
+
+if [ ${#monitors[@]} -lt 2 ]; then
+    echo "Error: Need at least 2 active monitors to swap"
+    exit 1
+fi
+
+focused=$(get_focused_monitor)
+if [ -z "$focused" ]; then
+    echo "Error: Could not determine focused monitor from bspwm"
+    exit 1
+fi
+
+echo "Found ${#monitors[@]} active monitors"
+echo "Focused monitor: $focused"
+
+# Debug output
+echo "Debug - parsed monitor info:"
+for mon in "${monitors[@]}"; do
+    echo "  $mon: x=${monitor_x[$mon]} y=${monitor_y[$mon]} res=${monitor_res[$mon]}"
+done
+
+# Find the monitor to swap with based on direction
+find_swap_target() {
+    local current="$1"
+    local direction="$2"
+    local curr_x=${monitor_x[$current]}
+    local curr_y=${monitor_y[$current]}
+    local target=""
+    local best_distance=999999
+    
+    for mon in "${monitors[@]}"; do
+        if [ "$mon" = "$current" ]; then
+            continue
+        fi
+        
+        local mon_x=${monitor_x[$mon]}
+        local mon_y=${monitor_y[$mon]}
+        local distance=0
+        local valid=false
+        
+        case "$direction" in
+            "left")
+                if [ $mon_x -lt $curr_x ]; then
+                    distance=$((curr_x - mon_x + (curr_y - mon_y) * (curr_y - mon_y) / 100))
+                    valid=true
+                fi
+                ;;
+            "right")
+                if [ $mon_x -gt $curr_x ]; then
+                    distance=$((mon_x - curr_x + (curr_y - mon_y) * (curr_y - mon_y) / 100))
+                    valid=true
+                fi
+                ;;
+            "up")
+                if [ $mon_y -lt $curr_y ]; then
+                    distance=$((curr_y - mon_y + (curr_x - mon_x) * (curr_x - mon_x) / 100))
+                    valid=true
+                fi
+                ;;
+            "down")
+                if [ $mon_y -gt $curr_y ]; then
+                    distance=$((mon_y - curr_y + (curr_x - mon_x) * (curr_x - mon_x) / 100))
+                    valid=true
+                fi
+                ;;
+        esac
+        
+        if [ "$valid" = true ] && [ $distance -lt $best_distance ]; then
+            best_distance=$distance
+            target="$mon"
+        fi
+    done
+    
+    echo "$target"
+}
+
+# Find target monitor to swap with focused
+target=$(find_swap_target "$focused" "$DIRECTION")
+
+if [ -z "$target" ]; then
+    echo "Error: No monitor found in direction '$DIRECTION' from focused monitor '$focused'"
+    echo "Current monitor positions:"
+    for mon in "${monitors[@]}"; do
+        echo "  $mon: ${monitor_x[$mon]},${monitor_y[$mon]} (${monitor_res[$mon]})"
+    done
+    exit 1
+fi
+
+echo "Swapping $focused with $target"
+
+# Get current positions
+focused_x=${monitor_x[$focused]}
+focused_y=${monitor_y[$focused]}
+focused_res=${monitor_res[$focused]}
+
+target_x=${monitor_x[$target]}
+target_y=${monitor_y[$target]}
+target_res=${monitor_res[$target]}
+
+echo "  $focused: ${focused_x},${focused_y} (${focused_res})"
+echo "  $target: ${target_x},${target_y} (${target_res})"
+
+# Build xrandr command to swap positions
+cmd="xrandr"
+
+# Set all monitors with swapped positions
+for mon in "${monitors[@]}"; do
+    if [ "$mon" = "$focused" ]; then
+        cmd="$cmd --output $mon --mode $focused_res --pos ${target_x}x${target_y}"
+    elif [ "$mon" = "$target" ]; then
+        cmd="$cmd --output $mon --mode $target_res --pos ${focused_x}x${focused_y}"
+    else
+        # Keep other monitors in their current positions
+        mon_x=${monitor_x[$mon]}
+        mon_y=${monitor_y[$mon]}
+        mon_res=${monitor_res[$mon]}
+        cmd="$cmd --output $mon --mode $mon_res --pos ${mon_x}x${mon_y}"
+    fi
+done
+
+# Preserve primary designation if it exists
+primary=$(xrandr --query | grep " connected.*primary" | awk '{print $1}')
+if [ -n "$primary" ]; then
+    cmd="$cmd --output $primary --primary"
+fi
+
+echo "Executing: $cmd"
+eval "$cmd"
+
+if [ $? -eq 0 ]; then
+    echo "Successfully swapped monitor positions!"
+else
+    echo "Error: Failed to swap monitor positions"
+    exit 1
+fi

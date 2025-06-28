@@ -1,0 +1,47 @@
+#!/bin/zsh
+
+state_file="${XDG_CACHE_HOME:-$HOME/.cache}/bspwm-monitor-layout"
+
+# Determine layout
+if [[ "$1" == "h" || "$1" == "v" ]]; then
+    new_layout="$1"
+else
+    last_layout="v"
+    [ -f "$state_file" ] && last_layout=$(cat "$state_file")
+    new_layout=$([ "$last_layout" = "h" ] && echo "v" || echo "h")
+fi
+
+echo "$new_layout" > "$state_file"
+
+monitors=("${(@f)$(active_monitors)}")
+
+x=0
+y=0
+
+for m in "${monitors[@]}"; do
+    read -r mode rate <<< $(xrandr | awk -v mon="$m" '
+        $0 ~ "^" mon " connected" { in_block = 1; next }
+        in_block && /^[[:space:]]+[0-9]+x[0-9]+/ {
+            if ($0 ~ /\+/) {
+                print $1, $2
+                exit
+            }
+        }
+        in_block && NF == 0 { exit }
+    ')
+
+    if [ -z "$mode" ] || [ -z "$rate" ]; then
+        echo "Could not detect mode or rate for $m"
+        continue
+    fi
+
+    if [ "$new_layout" = "h" ]; then
+        xrandr --output "$m" --mode "$mode" --rate "$rate" --pos ${x}x0
+        width=$(echo "$mode" | cut -d'x' -f1)
+        x=$((x + width))
+    else
+        xrandr --output "$m" --mode "$mode" --rate "$rate" --pos 0x${y}
+        height=$(echo "$mode" | cut -d'x' -f2)
+        y=$((y + height))
+    fi
+done
