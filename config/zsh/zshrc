@@ -12,6 +12,7 @@
     f           () { find . $1 | rg $1 }
     rb          () { curl cht.sh/ruby/$1 }
     gsd         () { git stash drop stash@{$1} }
+    gpc         () { git push origin $1:$(gbc) }
     nif         () { file=$(fzf) && nvim "$file" }
     vif         () { file=$(fzf) && vim "$file" }
     des         () { docker exec -it $1 sh }
@@ -21,7 +22,9 @@
     tare        () { tar -xvf $1 }
     tarc        () { tar -cvzf $1.tar.gz $1 }
     ntfy        () { curl https://ntfy.dncp4312.dev/$(uname -n) -d "$*" }
+    rcft        () { docker run -d cloudflare/cloudflared:latest tunnel --no-autoupdate run --token $CF_TOKEN }
     fdiff       () { diff -ru $1 $2 | diff-so-fancy }
+    tex2pdf     () { docker run --rm -v "$PWD:/docs" -w /docs latex "$1" }
     brighten    () { echo $1 > /sys/class/backlight/amdgpu_bl0/brightness }
     depends     () { awk '/Required/{for (i=4;i<NF+1;++i) print $i}' <(pQ -i $1) }
     colormap    () { for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done }
@@ -33,7 +36,10 @@
 		     cd "$dir" ; exa --group-directories-first --color=always }
     setlive     () { echo $(readlink -f $1) > $XDG_CONFIG_HOME/live ; bspc wm -r }
     png_to_b64  () { cat <(echo '  background-image: url(data:image/png;base64,') <(echo "$(convert $1 -resize $2x$2 png:- | base64)") <(echo ');') | tr -d '\n' > $(echo $1 | sed 's/.png//') }
-    gpl         () { git branch -r --merged | tr -d " " | grep origin | sed "s/origin\///" | grep -Ev "(^\*|master|development|staging|^$(git branch --show-current))" | xargs git branch --delete }
+    bt          () { local mac=$(bluetoothctl devices | grep -i "$2" | awk '{print $2}' | head -1) ; [[ -n "$mac" ]] && bluetoothctl "$1" "$mac" }
+    # gpl         () { git branch -r --merged | tr -d " " | grep origin | sed "s/origin\///" | grep -Ev "(^\*|master|development|staging|^$(git branch --show-current))" | xargs git branch --delete }
+    gbp         () { LBUFFER+=$(git branch | fzf --no-preview | tr -d '[* ]' || echo) ; zle redisplay }
+    gpl         () { git branch --merged | tr -d " " | sed "s/origin\///" | grep -Ev "(^\*|master|development|staging|^$(git branch --show-current))" | xargs git branch --delete }
 
     # decode_jwt  () { cut -d"." -f2 <<< $1 | base64 --decode | jq }
     decode_jwt() {
@@ -52,16 +58,26 @@
     list() { emulate -L zsh ; clear ; exa --group-directories-first }
 
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
+# ┃                                                                              widgets                                                                              ┃ #
+# ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
+
+    zle -N gbp
+
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                                                             shortcuts                                                                             ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
+    bindkey '^y' 'gbp'
+
     # bindkey -s '^o' 'vim $(fzf) ^M'
     bindkey -s '^b' 'gcf ^M'
     bindkey -s '^n' 'gcfr ^M'
+    bindkey -s '^j' 'gbm ^M'
     bindkey -s '^p' 'vif ^M'
     bindkey -s '^k' 'nif ^M'
     bindkey -s '^g' 'fcd ^M'
     bindkey -s '^w' 'sysres iwd ^M'
     bindkey -s '^[p' 'ping -c8 1.1.1.1 ^M'
+
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ #
 # ┃                                                                              sources                                                                              ┃ #
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
@@ -79,13 +95,15 @@
 
     terminaltheme.sh xeha 
 
+    autoload -U select-word-style
+    select-word-style default
+    WORDCHARS='*?[]~=&;!#$%^(){}<>'
+
     # plugins=(git-auto-fetch)
     # chpwd_functions=(${chpwd_functions[@]} "list")
 
     # alias sl=setlive
     # alias sc=' cd ~/.cache/styli.sh'
     # alias ew=' vim ~/.local/bin/styli.sh'
-    alias cn='cd ~/.config/nvim/'
-
-    # echo 'phil\npp' | hta_login > /dev/null
-    be
+    export local_ip=$(ipl | cut -d\/ -f1)
+    # ol() { echo "(79.56 - $1) * 285" | bc; }
