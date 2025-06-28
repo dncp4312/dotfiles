@@ -26,6 +26,7 @@ set fillchars=fold:\
 " set termwinsize=10x0
 " set termguicolors
 " set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+" set iskeyword-=_
 set backspace=indent,eol,start
 set pastetoggle=<Leader>v
 set clipboard=unnamedplus,autoselect
@@ -34,7 +35,6 @@ set clipboard=unnamedplus,autoselect
 " set list listchars=tab:>,trail:<,nbsp:.
 set ttymouse=sgr
 set mouse=a
-set undodir=~/.vim/undodir
 set undofile
 set undolevels=1000
 set undoreload=10000
@@ -83,6 +83,9 @@ autocmd BufWinEnter,BufNewFile * setlocal formatoptions-=cro
 autocmd BufRead,BufNewFile *.vue setfiletype html
 autocmd VimEnter * silent !echo "\e[4 q"
 autocmd VimLeave * silent !echo "\e[4 q"
+autocmd FileType tex nnoremap <buffer> <leader>tp :w<CR>:!zsh -i -c 'cd "%:p:h" && tex2pdf "%:t" && rm -f *.{aux,out,log}'<CR>
+autocmd FileType tex nnoremap <buffer> <leader>tv :!firefox %:r.pdf &<CR>
+
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
 "   Remaps
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
@@ -155,8 +158,8 @@ nnoremap <silent> <Leader>gf :let @+=substitute(expand('%:p'), '^' . escape(getc
 " ━━━━━━━━━━━━━━
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '>-2<CR>gv=gv
-inoremap <C-j> <esc>:m .+1<CR>==i
-inoremap <C-k> <esc>:m .-2<CR>==i
+" inoremap <C-j> <esc>:m .+1<CR>==i
+" inoremap <C-k> <esc>:m .-2<CR>==i
 " nnoremap <leader>j <esc>:m .+1<CR>==
 " nnoremap <leader>k <esc>:m .-2<CR>==
 
@@ -302,6 +305,7 @@ call plug#begin()
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-abolish'
+  Plug 'AndrewRadev/splitjoin.vim'
   "Plug 'github/copilot.vim'
    
 "  SnipMate
