@@ -15,6 +15,23 @@ echo "Xcursor.theme: phinger-cursors \n |
 
 envsubst < $XDG_DATA_HOME/themes/Graphite-Dark-Alt/gtk-3.0/gtk.css.temp  |
 	 > $XDG_DATA_HOME/themes/Graphite-Dark-Alt/gtk-3.0/gtk.css
+
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# Monitor
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+
+toggle_monitor_layout 'v'
+
+monitors=("${(@f)$(active_monitors)}")
+
+for m in $monitors; do
+  if [[ "$m" == "$monitors[-1]" ]]; then
+    bspc monitor "$m" -d 1 2 3 4 5 6 7 firefox 9
+  else
+    bspc monitor "$m" -d 1 2 3 4 5 6 7 8 9
+  fi
+done
+
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Startup
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
@@ -30,10 +47,6 @@ launch_polybar &
 xss-lock i3lock.sh &
 [[ "$1" = 0  ]] && sh -c 'sleep 2 && polybar-msg cmd restart' & 
 
-#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
-# Monitor
-#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
-bspc monitor $(xrandr | awk '/ connected/{print $1}') -d 1 2 3 4 5 6 firefox 8 9
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # Desktops
@@ -81,7 +94,9 @@ bspc rule -a Comms desktop=8 follow=off
 bspc rule -a Slack desktop=8 follow=off
 bspc rule -a Chromium desktop='firefox' follow=on
 bspc rule -a Chromium:crx_nfecgfopkdiicnnmccikafaofaoffegm desktop=8 follow=off
+bspc rule -a Chromium:crx_faolnafnngnfdaknnbpnkhgohbobgegn desktop=8 follow=off
 bspc rule -a mpv:gl state=floating center=on rectangle=576x324+0+0 follow=off 
+bspc rule -a firfox:Toolkit state=floating center=on rectangle=576x324+0+0 follow=off
 bspc rule -a Gpick sticky=on state=floating center=on
 bspc rule -a discord sticky=on state=floating center=on rectangle=1000x800+0+0
 bspc rule -a KeePassXC desktop=9 state=floating #hidden=on rectangle=800x600+0+0
