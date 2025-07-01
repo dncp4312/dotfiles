@@ -1,26 +1,19 @@
-#!/usr/bin/env bash
-
-DIR="$HOME/.config/polybar/"
+#!/usr/bin/env zsh
 
 killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-if [ $(xrandr --query | grep " connected" | wc -l) -gt 1  ]; then
-    for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-	#MONITOR=$m polybar --reload main &
-	MONITOR=DP-1 polybar main &
- 	# MONITOR=eDP-1 polybar left &
-	# MONITOR=DP-1 polybar right &
-	# MONITOR=HDMI-3 polybar left &
-	# MONITOR=DP-2 polybar right &
-    done
-else
-    case "$(xrandr --query --verbose | grep eDP-1 | cut -d' ' -f6)" in
-	'normal')  bar='main' ;;
-	'inverted')  bar='main' ;;
-	'right')  bar='portrait' ;;
-	'left')  bar='portrait' ;;
-    esac
-    polybar $bar &
-fi
+layout_file="${XDG_CACHE_HOME:-$HOME/.cache}/bspwm-monitor-layout"
+layout=$(<"$layout_file" 2>/dev/null)
+# [[ -z "$layout" ]] && layout="h"
 
+monitors=("${(@f)$(active_monitors)}")
+
+if [[ "$layout" == "h" && ${#monitors[@]} -eq 2 ]]; then
+  MONITOR="${monitors[1]}" polybar --reload left &
+  MONITOR="${monitors[2]}" polybar --reload right &
+else
+  for m in $monitors; do
+    MONITOR="$m" polybar --reload main &
+  done
+fi
