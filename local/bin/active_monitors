@@ -1,6 +1,18 @@
 #!/usr/bin/env zsh
 
-PREFERRED_ORDER=(DP-1 eDP-1)
+state_file="${XDG_CACHE_HOME:-$HOME/.cache}/bspwm-monitor-layout"
+
+case "$1" in
+  h|v) layout="$1" ;;
+  *)   layout=${$(<"$state_file" 2>/dev/null):-v} ;;
+esac
+
+case "$layout" in
+  h) PREFERRED_ORDER=(eDP-1 DP-1) ;;
+  v) PREFERRED_ORDER=(DP-1 eDP-1) ;;
+esac
+
+[[ $1 == s ]] && PREFERRED_ORDER=("${(Oa)PREFERRED_ORDER}")
 
 active_monitors=$(xrandr | awk '/ connected/ {print $1}' | while read -r mon; do
     xrandr | awk -v mon="$mon" '

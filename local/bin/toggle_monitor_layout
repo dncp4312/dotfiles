@@ -13,7 +13,7 @@ fi
 
 echo "$new_layout" > "$state_file"
 
-monitors=("${(@f)$(active_monitors)}")
+monitors=("${(@f)$(active_monitors $new_layout)}")
 
 x=0
 y=0
@@ -45,3 +45,7 @@ for m in "${monitors[@]}"; do
         y=$((y + height))
     fi
 done
+
+restore_fehbg
+launch_polybar > /dev/null 2>&1
+
