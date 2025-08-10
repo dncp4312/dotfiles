@@ -123,6 +123,7 @@ noremap <silent> <Leader>yf :let @+=expand("%")<CR>
 nmap <leader>mt <plug>(MergetoolToggle)
 
 nnoremap Y y$
+nnoremap <Leader>yy mygg"+yG`y
 nnoremap <C-k> <C-w>
 noremap <Up> <Nop>
 noremap <Down> <Nop>
@@ -418,19 +419,19 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 "  VimWiki
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-let g:vimwiki_list = [ { 'path' : '~/Documents/Vimwiki/' }, { 'path' : '~/Documents/Vimwiki/HTA_Updates' } ]
+let g:vimwiki_list = [ { 'path' : '~/Documents/Workbench/Vimwiki/' }, { 'path' : '~/Documents/Workbench/Vimwiki/HTA_Updates' } ]
 
 " let g:vimwiki_listsyms = '✗○◐●✓'
 " nnoremap <silent> <Leader>u :silent Vimwiki2HTML<CR>:silent execute "!update_ekke > /dev/null 2>&1 | true"<CR>:redraw!<CR>
 nnoremap <silent> <Leader>u :silent Vimwiki2HTML<CR>:silent call UpdateEkke()<CR>
 
-function! UpdateEkke()
-    silent !rm ~/Documents/hta_updates -r
-    silent !mv ~/Documents/Vimwiki_html ~/Documents/hta_updates
-    silent !mv ~/Documents/hta_updates/HTA_Updates.html ~/Documents/hta_updates/index.html
-    silent !rsync -av ~/Documents/hta_updates home:Server
-    redraw!
-endfunction
+" function! UpdateEkke()
+"     silent !rm ~/Documents/hta_updates -r
+"     silent !mv ~/Documents/Vimwiki_html ~/Documents/hta_updates
+"     silent !mv ~/Documents/hta_updates/HTA_Updates.html ~/Documents/hta_updates/index.html
+"     silent !rsync -av ~/Documents/hta_updates home:Server
+"     redraw!
+" endfunction
 
 " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 "  SnipMate
