@@ -229,12 +229,19 @@ hta_get() {
 }
 
 hta_post() {
-    local url="http://hta.test/api/v2/webhooks/pandadocs"
-    # if [[ -z "$AT" ]]; then
-	# echo "Access token not found. Please run 'hta_login' first."
-	# return 1
-    # fi
-    response=$(curl -s -X POST "$url")
+    clear >&2
+    local endpoint=$1
+    local file=$2
+    # local url="http://hta.test/api/v2/webhooks/pandadocs"
+    local url="http://hta.localhost/api/v2/$endpoint"
+
+    if [[ -z "$AT" ]]; then
+	# echo '{ "error": "Access token not found. Please run \'hta_login\' first." }'
+	echo "Access token not found. Please run 'hta_login' first."
+	return 1
+    fi
+
+    response=$(curl -s -X POST -H "Authorization: Bearer $AT" -H "Content-Type: application/json" --data @"$file" "$url")
     echo "$response"
 }
 
@@ -242,7 +249,7 @@ hta_patch() {
     local endpoint=$1
     local resource=$2
     local data=$3
-    local url="http://hta.localhost:8081/api/v2/$endpoint/$resource"
+    local url="http://hta.localhost/api/v2/$endpoint/$resource"
 
     if [[ -z "$AT" ]]; then
 	echo "Access token not found. Please run 'hta_login' first."

@@ -11,6 +11,7 @@
 
     f           () { find . $1 | rg $1 }
     rb          () { curl cht.sh/ruby/$1 }
+    hf          () { clear ; rg "$(xclip -o -selection primary)" $1 }
     gsd         () { git stash drop stash@{$1} }
     gpc         () { git push origin $1:$(gbc) }
     nif         () { file=$(fzf) && nvim "$file" }
@@ -22,7 +23,7 @@
     tare        () { tar -xvf $1 }
     tarc        () { tar -cvzf $1.tar.gz $1 }
     ntfy        () { curl https://ntfy.dncp4312.dev/$(uname -n) -d "$*" }
-    rcft        () { docker run -d cloudflare/cloudflared:latest tunnel --no-autoupdate run --token $CF_TOKEN }
+    rcft        () { docker run -d --rm --name cloudflared cloudflare/cloudflared:latest tunnel --no-autoupdate run --token $CF_TOKEN }
     fdiff       () { diff -ru $1 $2 | diff-so-fancy }
     tex2pdf     () { docker run --rm -v "$PWD:/docs" -w /docs latex "$1" }
     brighten    () { echo $1 > /sys/class/backlight/amdgpu_bl0/brightness }
@@ -75,6 +76,7 @@
     bindkey -s '^p' 'vif ^M'
     bindkey -s '^k' 'nif ^M'
     bindkey -s '^g' 'fcd ^M'
+    bindkey -s '^f' 'hf ^M'
     bindkey -s '^w' 'sysres iwd ^M'
     bindkey -s '^[p' 'ping -c8 1.1.1.1 ^M'
 
@@ -85,6 +87,7 @@
     [[ ! -f $ZDOTDIR/grml.zsh ]] || source $ZDOTDIR/grml.zsh
     [[ ! -f $ZDOTDIR/aliases  ]] || source $ZDOTDIR/aliases
     [[ ! -f $ZDOTDIR/ekke.zsh ]] || source $ZDOTDIR/ekke.zsh
+    [[ ! -f $ZDOTDIR/tgc.zsh  ]] || source $ZDOTDIR/tgc.zsh
     [[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh ; source $ZDOTDIR/.p10k/powerlevel10k.zsh-theme
     [[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
     # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -94,10 +97,11 @@
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ #
 
     terminaltheme.sh xeha 
+    eval "$(zoxide init zsh)"
 
     autoload -U select-word-style
     select-word-style default
-    WORDCHARS='*?[]~=&;!#$%^(){}<>'
+    WORDCHARS='*?[]~=&;!#$%^(){}<>_'
 
     # plugins=(git-auto-fetch)
     # chpwd_functions=(${chpwd_functions[@]} "list")

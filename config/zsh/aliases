@@ -154,6 +154,8 @@ alias kd='xdotool keydown'
 alias bq='bspc quit'
 alias br='bspc wm -r'
 
+alias jql='jq -C | less -R'
+alias sjql="tr '\n' '\f' | sed 's/\f/\\\\n/g' | jq -C | less -R"
 alias follow='c ; tail -fn0'
 alias matrix="unimatrix -n -s 94 -l 'o' -f | lolcat"
 alias discord="LIBVA_DRIVER_NAME=i915 discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-feature=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
@@ -180,4 +182,4 @@ alias deepseek='docker exec -it ollama ollama run deepseek-r1:1.5b'
 alias deepseek7='docker exec -it ollama ollama run deepseek-r1:7b'
 alias solargraph='docker run -d --name solargraph --restart=always -p 7658:7658 solargraph'
 alias rubocop='docker run --rm --entrypoint rubocop -v "$PWD":/app -w /app solargraph'
-
+alias copy='xclip -selection clipboard'
