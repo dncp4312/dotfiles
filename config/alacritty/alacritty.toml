@@ -1,0 +1,52 @@
+[env]
+WINIT_X11_SCALE_FACTOR = "1.0"
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.normal]
+yellow = "#8a2be2"
+
+[colors.primary]
+background = "#000000"
+foreground = "#e2e2e2"
+
+[cursor]
+style = "Underline"
+unfocused_hollow = true
+thickness = 0.2
+
+[font.bold]
+family = "CaskaydiaCoveNerdFontMono"
+style = "Bold"
+
+[font.normal]
+family = "CaskaydiaCoveNerdFontMono"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = -1
+
+[font.offset]
+x = 0
+y = 1
+
+[mouse]
+hide_when_typing = true
+
+[window]
+opacity = 0.85
+decorations = "none"
+
+[window.dimensions]
+columns = 110
+lines = 28
+
+[window.padding]
+x = 5
+y = 5
+
+[window.position]
+x = 560
+y = 500
